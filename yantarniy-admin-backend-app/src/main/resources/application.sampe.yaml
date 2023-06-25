@@ -10,9 +10,9 @@ spring:
     change-log: classpath:/liquibase/master.xml
 
   datasource:
-    url: jdbc:postgresql://188.225.26.116:5432/yantarniy-db?stringtype=unspecified
-    password: F2D}Px%k
-    username: yanadmin
+    url: jdbc:postgresql://url:5432/db?stringtype=unspecified
+    password: password
+    username: user
     hikari:
       idle-timeout: 120000
       leak-detection-threshold: 300000
