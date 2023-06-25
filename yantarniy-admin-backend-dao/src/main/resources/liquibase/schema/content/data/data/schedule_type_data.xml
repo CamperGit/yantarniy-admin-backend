@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_data_schedule_type_insert_2023-06-26_00:26" author="Camper" context="all">
+        <insert tableName="schedule_type">
+            <column name="type" value="GROUP_SCHEDULE"/>
+            <column name="title" value="Расписание групповых программ"/>
+        </insert>
+        <insert tableName="schedule_type">
+            <column name="type" value="SCHEDULE_CHANGE"/>
+            <column name="title" value="Изменение в расписании"/>
+        </insert>
+        <insert tableName="schedule_type">
+            <column name="type" value="SCHEDULE_DESCRIPTION"/>
+            <column name="title" value="Расшифровка"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="schedule_type">
+                <where>type IN ('GROUP_SCHEDULE', 'SCHEDULE_CHANGE', 'SCHEDULE_DESCRIPTION')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

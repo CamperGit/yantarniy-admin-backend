@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.12.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>ru.ds</groupId>
+    <artifactId>yantarniy-admin-backend</artifactId>
+    <name>yantarniy-admin-backend</name>
+    <modules>
+        <module>yantarniy-admin-backend-app</module>
+        <module>yantarniy-admin-backend-core</module>
+        <module>yantarniy-admin-backend-dao</module>
+        <module>yantarniy-admin-backend-rest</module>
+        <module>yantarniy-admin-backend-minio</module>
+        <module>yantarniy-admin-backend-telegram</module>
+        <module>yantarniy-admin-backend-common</module>
+    </modules>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <description>yantarniy-admin-backend</description>
+
+    <properties>
+        <java.version>11</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <file.encoding>${project.build.sourceEncoding}</file.encoding>
+
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <spring.boot.dependencies.version>2.3.2.RELEASE</spring.boot.dependencies.version>
+        <spring.boot.validation.version>2.3.12.RELEASE</spring.boot.validation.version>
+        <spring.boot.security.version>1.1.10.RELEASE</spring.boot.security.version>
+        <spring.cloud.kubernetes.version>2.3.12.RELEASE</spring.cloud.kubernetes.version>
+        <spring.boot.web.version>3.0.6</spring.boot.web.version>
+        <spring.boot.jdbc.version>3.0.6</spring.boot.jdbc.version>
+
+        <swagger.version>3.0.0</swagger.version>
+
+        <liquibase.version>3.8.0</liquibase.version>
+        <minio.version>8.5.3</minio.version>
+        <orika.version>1.5.4</orika.version>
+        <apache.commons.version>3.12.0</apache.commons.version>
+        <google.guava.version>28.0-jre</google.guava.version>
+        <lombok.version>1.18.10</lombok.version>
+        <telegrambots.version>6.7.0</telegrambots.version>
+        <telegrambots-extensions.version>6.7.0</telegrambots-extensions.version>
+
+        <img.repo></img.repo>
+        <img.tag></img.tag>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+                <version>${spring.cloud.kubernetes.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.web.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-validation</artifactId>
+                <version>${spring.boot.validation.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring.boot.jdbc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambots</artifactId>
+                <version>${telegrambots.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambotsextensions</artifactId>
+                <version>${telegrambots-extensions.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

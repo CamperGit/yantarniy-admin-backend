@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ru.ds</groupId>
+        <artifactId>yantarniy-admin-backend</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <artifactId>yantarniy-admin-backend-app</artifactId>
+
+    <properties>
+        <java.version>11</java.version>
+
+        <yantarniy-admin-backend-rest.version>1.0.0</yantarniy-admin-backend-rest.version>
+        <yantarniy-admin-backend-telegram.version>1.0.0</yantarniy-admin-backend-telegram.version>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <mainClass>ru.ds.yantarniy.admin.backend.app.YantarniyAdminBackendAppApplication</mainClass>
+                    </container>
+
+                    <to>
+                        <image>${image.repo}/yantarniy-work/${project.artifactId}:${image.tag}</image>
+                    </to>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.ds</groupId>
+            <artifactId>yantarniy-admin-backend-rest</artifactId>
+            <version>${yantarniy-admin-backend-rest.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ds</groupId>
+            <artifactId>yantarniy-admin-backend-telegram</artifactId>
+            <version>${yantarniy-admin-backend-telegram.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

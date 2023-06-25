@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_schedule_fk_2023-06-26_00:09" author="Camper" context="all">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="schedule"
+                        foreignKeyName="fk_schedule_schedule_type_id"/>
+
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="schedule"
+                        foreignKeyName="fk_schedule_file_id"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseTableName="schedule"
+                                 baseColumnNames="schedule_type_id"
+                                 referencedTableName="schedule_type"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_schedule_schedule_type_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_schedule_schedule_type_id"/>
+
+        <addForeignKeyConstraint baseTableName="schedule"
+                                 baseColumnNames="file_id"
+                                 referencedTableName="file"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_schedule_file_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_schedule_file_id"/>
+
+    </changeSet>
+</databaseChangeLog>

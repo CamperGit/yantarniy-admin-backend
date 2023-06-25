@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_data_location_insert_2023-06-26_00:26" author="Camper" context="all">
+        <insert tableName="location">
+            <column name="type" value="CLUB_CARDS"/>
+            <column name="title" value="Клубные карты"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="GYM"/>
+            <column name="title" value="Тренажёрный зал"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="GROUP_ACTIVITY"/>
+            <column name="title" value="Зал групповых программ"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="POOL"/>
+            <column name="title" value="Бассейн"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="SPA"/>
+            <column name="title" value="СПА"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="BATHHOUSE"/>
+            <column name="title" value="Баня"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="NAILS"/>
+            <column name="title" value="Ногтевой сервис"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="COSMETOLOGY"/>
+            <column name="title" value="Косметология"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="STYLISTS"/>
+            <column name="title" value="Стилисты"/>
+        </insert>
+        <insert tableName="location">
+            <column name="type" value="MASSAGE"/>
+            <column name="title" value="Массаж"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="location">
+                <where>type IN ('CLUB_CARDS', 'GYM', 'GROUP_ACTIVITY', 'POOL', 'SPA', 'BATHHOUSE', 'NAILS', 'COSMETOLOGY', 'STYLISTS', 'MASSAGE')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

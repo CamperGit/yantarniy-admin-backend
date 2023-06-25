@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_tables_file_create_2023-06-25_02:00" author="Camper">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="file"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="file" remarks="file">
+            <column name="id" type="BIGINT" remarks="id" defaultValue="nextval('file_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="storage_url" type="VARCHAR" remarks="storage_url">
+                <constraints nullable="false"/>
+            </column>
+            <column name="minio_object_id" type="VARCHAR" remarks="minio_object_id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR" remarks="name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="size" type="BIGINT" remarks="size">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE" remarks="create_time">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR" remarks="status">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="file"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

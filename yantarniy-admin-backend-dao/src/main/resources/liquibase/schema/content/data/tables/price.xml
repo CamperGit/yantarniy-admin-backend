@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_tables_price_create_2023-06-25_02:00" author="Camper">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="price"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="price" remarks="price">
+            <column name="id" type="BIGINT" remarks="id" defaultValue="nextval('price_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_id" type="BIGINT" remarks="file_id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="BIGINT" remarks="location_id">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="price"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

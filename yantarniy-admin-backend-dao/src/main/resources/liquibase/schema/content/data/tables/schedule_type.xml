@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_tables_schedule_type_create_2023-06-25_02:00" author="Camper">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="schedule_type"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="schedule_type" remarks="schedule_type">
+            <column name="id" type="BIGINT" remarks="id" defaultValue="nextval('schedule_type_id_seq')">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR" remarks="type">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR" remarks="title">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="schedule_type"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  error:
+    include-stacktrace: always
+    include-exception: true
+
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/master.xml
+
+  datasource:
+    url: jdbc:postgresql://188.225.26.116:5432/yantarniy-db?stringtype=unspecified
+    password: F2D}Px%k
+    username: yanadmin
+    hikari:
+      idle-timeout: 120000
+      leak-detection-threshold: 300000
+      max-lifetime: 300000
+
+minio:
+  disk-url: localhost:8083

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_sale_id_seq_2023_06-25_02:03" author="Camper" context="all">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="sale_id_seq"/>
+            </not>
+        </preConditions>
+
+        <createSequence
+                incrementBy="1"
+                maxValue="9223372036854775807"
+                minValue="1"
+                sequenceName="sale_id_seq"
+                startValue="1"/>
+
+        <rollback>
+            <dropSequence sequenceName="sale_id_seq"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

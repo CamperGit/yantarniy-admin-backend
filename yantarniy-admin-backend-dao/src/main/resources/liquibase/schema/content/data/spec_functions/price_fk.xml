@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_price_fk_2023-06-26_00:09" author="Camper" context="all">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="price"
+                        foreignKeyName="fk_price_location_id"/>
+
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="price"
+                        foreignKeyName="fk_price_file_id"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseTableName="price"
+                                 baseColumnNames="location_id"
+                                 referencedTableName="location"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_price_location_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_price_location_id"/>
+
+        <addForeignKeyConstraint baseTableName="price"
+                                 baseColumnNames="file_id"
+                                 referencedTableName="file"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_price_file_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_price_file_id"/>
+    </changeSet>
+</databaseChangeLog>

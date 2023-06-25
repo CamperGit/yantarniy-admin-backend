@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_employee_fk_2023-06-26_00:09" author="Camper" context="all">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="employee"
+                        foreignKeyName="fk_employee_employee_type_id"/>
+
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="employee"
+                        foreignKeyName="fk_employee_file_id"/>
+
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="employee"
+                        foreignKeyName="fk_employee_location_id"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseTableName="employee"
+                                 baseColumnNames="employee_type_id"
+                                 referencedTableName="employee_type"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_employee_employee_type_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_employee_employee_type_id"/>
+
+        <addForeignKeyConstraint baseTableName="employee"
+                                 baseColumnNames="file_id"
+                                 referencedTableName="file"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_employee_file_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_employee_file_id"/>
+
+        <addForeignKeyConstraint baseTableName="employee"
+                                 baseColumnNames="location_id"
+                                 referencedTableName="location"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="fk_employee_location_id"
+                                 onUpdate="CASCADE"
+                                 onDelete="RESTRICT"
+                                 validate="true"
+                                 constraintName="fk_employee_location_id"/>
+
+    </changeSet>
+</databaseChangeLog>

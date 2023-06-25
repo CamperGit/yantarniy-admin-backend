@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_data_employee_type_insert_2023-06-26_00:26" author="Camper" context="all">
+        <insert tableName="employee_type">
+            <column name="type" value="COACH"/>
+            <column name="title" value="Тренер"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="MASTER_COACH"/>
+            <column name="title" value="Мастер тренер"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="MASTER_COACH_PLUS"/>
+            <column name="title" value="Мастер тренер плюс"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="NAILS_MASTER"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="MASSAGE_MASTER"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="COSMETOLOGY_MASTER"/>
+        </insert>
+        <insert tableName="employee_type">
+            <column name="type" value="STYLIST"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="employee_type">
+                <where>type IN ('COACH', 'MASTER_COACH', 'MASTER_COACH_PLUS', 'NAILS_MASTER', 'MASSAGE_MASTER', 'COSMETOLOGY_MASTER', 'STYLIST')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
