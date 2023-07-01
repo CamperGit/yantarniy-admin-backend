@@ -26,7 +26,7 @@
             <column name="username" type="VARCHAR" remarks="username">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="create_time">
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="created_date">
                 <constraints nullable="false"/>
             </column>
             <column name="last_entry" type="TIMESTAMP WITHOUT TIME ZONE" remarks="last_entry">

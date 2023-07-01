@@ -19,4 +19,11 @@ spring:
       max-lifetime: 300000
 
 minio:
-  disk-url: localhost:8083
+  url: url
+  access-key: user
+  secret-key: password
+  bucket-name: bucket
+  secure: false
+  port: 9000
+  object-size: -1
+  part-size: 10485760

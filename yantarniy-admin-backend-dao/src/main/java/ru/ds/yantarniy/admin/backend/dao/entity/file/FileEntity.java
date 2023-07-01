@@ -27,8 +27,8 @@ public class FileEntity {
     @Column(name = "storage_url")
     String storageUrl;
 
-    @Column(name = "minio_object_id")
-    String minioObjectId;
+    @Column(name = "e_tag")
+    String eTag;
 
     @Column(name = "name")
     String name;
@@ -39,8 +39,4 @@ public class FileEntity {
     @CreatedDate
     @Column(name = "created_date", updatable = false)
     LocalDateTime createdDate;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    FileStatus status;
 }
