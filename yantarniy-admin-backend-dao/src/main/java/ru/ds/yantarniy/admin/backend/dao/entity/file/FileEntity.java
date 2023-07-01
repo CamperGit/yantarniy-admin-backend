@@ -33,7 +33,7 @@ public class FileEntity {
     @Column(name = "name")
     String name;
 
-    @Column(name = "name")
+    @Column(name = "size")
     Long size;
 
     @CreatedDate

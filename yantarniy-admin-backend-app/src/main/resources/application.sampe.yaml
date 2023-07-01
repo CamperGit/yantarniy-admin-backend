@@ -27,3 +27,11 @@ minio:
   port: 9000
   object-size: -1
   part-size: 10485760
+
+locale:
+  tag: ru-RU
+
+telegram:
+  bot:
+    username: username
+    token: token

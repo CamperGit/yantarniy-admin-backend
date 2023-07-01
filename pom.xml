@@ -44,7 +44,7 @@
         <swagger.version>3.0.0</swagger.version>
 
         <liquibase.version>3.8.0</liquibase.version>
-        <minio.version>8.5.3</minio.version>
+        <minio.version>8.2.1</minio.version>
         <orika.version>1.5.4</orika.version>
         <apache.commons.version>3.12.0</apache.commons.version>
         <google.guava.version>28.0-jre</google.guava.version>
