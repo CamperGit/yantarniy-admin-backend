@@ -17,7 +17,7 @@
             <column name="storage_url" type="VARCHAR" remarks="storage_url">
                 <constraints nullable="false"/>
             </column>
-            <column name="minio_object_id" type="VARCHAR" remarks="minio_object_id">
+            <column name="e_tag" type="VARCHAR" remarks="e_tag">
                 <constraints nullable="false"/>
             </column>
             <column name="name" type="VARCHAR" remarks="name">
@@ -26,10 +26,7 @@
             <column name="size" type="BIGINT" remarks="size">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="create_time">
-                <constraints nullable="false"/>
-            </column>
-            <column name="status" type="VARCHAR" remarks="status">
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="created_date">
                 <constraints nullable="false"/>
             </column>
         </createTable>

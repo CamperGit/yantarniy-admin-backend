@@ -1,7 +1,9 @@
 package ru.ds.yantarniy.admin.backend.minio.config;
 
 import io.minio.MinioClient;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,10 +13,11 @@ import ru.ds.yantarniy.admin.backend.minio.property.MinioProperties;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties
-@ComponentScan(basePackages = { "ru.ds.yantarniy.admin.backend.minio" })
+@ComponentScan(basePackages = {"ru.ds.yantarniy.admin.backend.minio"})
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MinioConfiguration {
 
-    private final MinioProperties minioProperties;
+    MinioProperties minioProperties;
 
     @Bean
     public MinioClient minioClient() {
