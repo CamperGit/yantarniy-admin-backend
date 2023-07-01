@@ -26,7 +26,7 @@
             <column name="size" type="BIGINT" remarks="size">
                 <constraints nullable="false"/>
             </column>
-            <column name="create_time" type="TIMESTAMP WITHOUT TIME ZONE" remarks="create_time">
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="create_time">
                 <constraints nullable="false"/>
             </column>
             <column name="status" type="VARCHAR" remarks="status">

@@ -18,15 +18,19 @@
         </insert>
         <insert tableName="employee_type">
             <column name="type" value="NAILS_MASTER"/>
+            <column name="title" value="Мастер маникюра"/>
         </insert>
         <insert tableName="employee_type">
             <column name="type" value="MASSAGE_MASTER"/>
+            <column name="title" value="Мастер массажа"/>
         </insert>
         <insert tableName="employee_type">
             <column name="type" value="COSMETOLOGY_MASTER"/>
+            <column name="title" value="Мастер косметологии"/>
         </insert>
         <insert tableName="employee_type">
             <column name="type" value="STYLIST"/>
+            <column name="title" value="Стилист"/>
         </insert>
 
         <rollback>
