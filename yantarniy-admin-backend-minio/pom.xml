@@ -15,6 +15,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <yantarniy-admin-backend-common.version>1.0.0</yantarniy-admin-backend-common.version>
     </properties>
 
     <dependencies>
@@ -29,8 +31,25 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ds</groupId>
+            <artifactId>yantarniy-admin-backend-common</artifactId>
+            <version>${yantarniy-admin-backend-common.version}</version>
         </dependency>
     </dependencies>
 
