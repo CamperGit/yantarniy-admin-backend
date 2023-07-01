@@ -34,8 +34,8 @@ public class ScheduleTypeServiceImpl implements ScheduleTypeService {
 
     @Override
     public ScheduleTypeEntity findById(Long id) {
-        return scheduleTypeRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException(String.format("Not found ScheduleTypeEntity with id = %d", id)));
+        return scheduleTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Not found ScheduleTypeEntity with id = %d", id)));
     }
 
     @Override

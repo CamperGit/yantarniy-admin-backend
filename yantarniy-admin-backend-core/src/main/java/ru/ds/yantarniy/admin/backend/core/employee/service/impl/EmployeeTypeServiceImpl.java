@@ -31,8 +31,8 @@ public class EmployeeTypeServiceImpl implements EmployeeTypeService {
 
     @Override
     public EmployeeTypeEntity findById(Long id) {
-        return employeeTypeRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException(String.format("Not found EmployeeTypeEntity with id = %d", id)));
+        return employeeTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Not found EmployeeTypeEntity with id = %d", id)));
     }
 
     @Override

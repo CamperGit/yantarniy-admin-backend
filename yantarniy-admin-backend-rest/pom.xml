@@ -16,7 +16,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <yantarniy-admin-backend-core.version>1.0.0</yantarniy-admin-backend-core.version>
+        <yantarniy-admin-backend-telegram.version>1.0.0</yantarniy-admin-backend-telegram.version>
     </properties>
 
     <dependencies>
@@ -32,8 +32,8 @@
 
         <dependency>
             <groupId>ru.ds</groupId>
-            <artifactId>yantarniy-admin-backend-core</artifactId>
-            <version>${yantarniy-admin-backend-core.version}</version>
+            <artifactId>yantarniy-admin-backend-telegram</artifactId>
+            <version>${yantarniy-admin-backend-telegram.version}</version>
         </dependency>
 
         <dependency>
