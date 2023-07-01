@@ -24,7 +24,7 @@ public class CallAdminButtonHandler implements BotCallbackHandler {
 
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
-        Message message = update.getMessage();
+        Message message = update.getCallbackQuery().getMessage();
         bot.changeMessage(
                 message,
                 localeMessageSource.getMessage(CALL_ADMIN_MESSAGE_SOURCE),

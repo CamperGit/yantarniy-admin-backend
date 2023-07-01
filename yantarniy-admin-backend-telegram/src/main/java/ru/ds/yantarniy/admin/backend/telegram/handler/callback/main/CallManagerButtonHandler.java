@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.ds.yantarniy.admin.backend.core.locale.LocaleMessageSource;
@@ -23,8 +24,9 @@ public class CallManagerButtonHandler implements BotCallbackHandler {
 
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
+        Message message = update.getCallbackQuery().getMessage();
         bot.changeMessage(
-                update.getMessage(),
+                message,
                 localeMessageSource.getMessage(CALL_MANAGER_LOCALE_MESSAGE),
                 MarkupUtils.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false)
         );

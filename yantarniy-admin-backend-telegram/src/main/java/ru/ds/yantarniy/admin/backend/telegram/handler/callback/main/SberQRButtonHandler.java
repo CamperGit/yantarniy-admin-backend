@@ -30,7 +30,7 @@ public class SberQRButtonHandler implements BotCallbackHandler {
 
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
-        Message message = update.getMessage();
+        Message message = update.getCallbackQuery().getMessage();
         String chatId = message.getChatId().toString();
 
         SendPhoto sendPhoto = new SendPhoto();
