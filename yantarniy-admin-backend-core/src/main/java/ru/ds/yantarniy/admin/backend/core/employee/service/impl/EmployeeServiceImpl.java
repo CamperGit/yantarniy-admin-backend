@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
+import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.service.EmployeeService;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
@@ -13,6 +14,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeRepository;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,12 +28,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeEntity create(EmployeeCreateRequest request) {
-        FileEntity file = null;
-        if (request.getFileUploadRequest() != null) {
-            file = fileService.upload(request.getFileUploadRequest());
-        }
         EmployeeEntity entity = request.getEntity();
-        entity.setFile(file);
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity file = fileService.upload(fileUploadRequest);
+            entity.setFile(file);
+        });
+        return save(entity);
+    }
+
+    @Override
+    public EmployeeEntity update(EmployeeUpdateRequest request) {
+        EmployeeEntity entity = request.getEntity();
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity newFile = fileService.upload(fileUploadRequest);
+            Optional.ofNullable(entity.getFile()).ifPresent(currentEntityFile -> fileService.deleteById(currentEntityFile.getId()));
+            entity.setFile(newFile);
+        });
         return save(entity);
     }
 

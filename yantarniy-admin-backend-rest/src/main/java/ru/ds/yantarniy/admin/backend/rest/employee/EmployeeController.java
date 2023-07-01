@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.ds.yantarniy.admin.backend.common.orika.DefaultMapper;
 import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapper;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
+import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.service.EmployeeService;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
@@ -31,7 +32,7 @@ public class EmployeeController {
     @DefaultMapper
     OrikaMapper mapper;
 
-    @PostMapping
+    @PostMapping("/creating")
     @ApiOperation("Создание сотрудника")
     public ResponseEntity<EmployeeDto> create(
             @ApiParam(value = "Сущность сотрудника")
@@ -45,6 +46,22 @@ public class EmployeeController {
                 .fileUploadRequest(fileUploadRequest)
                 .build());
         return ResponseEntity.ok(mapper.map(createdEmployee, EmployeeDto.class));
+    }
+
+    @PostMapping("/updating")
+    @ApiOperation("Обновление сотрудника")
+    public ResponseEntity<EmployeeDto> update(
+            @ApiParam(value = "Сущность сотрудника")
+            @RequestPart(value = "employee") EmployeeDto employeeDto,
+            @RequestPart(value = "image", required = false) MultipartFile image
+    ) {
+        FileUploadRequest fileUploadRequest = MultipartFileUtils.convert(image);
+        EmployeeEntity entity = mapper.map(employeeDto, EmployeeEntity.class);
+        EmployeeEntity updatedEmployee = employeeService.update(EmployeeUpdateRequest.builder()
+                .entity(entity)
+                .fileUploadRequest(fileUploadRequest)
+                .build());
+        return ResponseEntity.ok(mapper.map(updatedEmployee, EmployeeDto.class));
     }
 
     @GetMapping("/{id}")

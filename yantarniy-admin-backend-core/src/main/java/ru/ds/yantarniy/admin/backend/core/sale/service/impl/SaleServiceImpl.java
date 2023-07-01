@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleCreateRequest;
+import ru.ds.yantarniy.admin.backend.core.sale.model.SaleUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.service.SaleService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
@@ -15,6 +16,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,12 +30,22 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public SaleEntity create(SaleCreateRequest request) {
-        FileEntity file = null;
-        if (request.getFileUploadRequest() != null) {
-            file = fileService.upload(request.getFileUploadRequest());
-        }
         SaleEntity entity = request.getEntity();
-        entity.setFile(file);
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity file = fileService.upload(fileUploadRequest);
+            entity.setFile(file);
+        });
+        return save(entity);
+    }
+
+    @Override
+    public SaleEntity update(SaleUpdateRequest request) {
+        SaleEntity entity = request.getEntity();
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity newFile = fileService.upload(fileUploadRequest);
+            Optional.ofNullable(entity.getFile()).ifPresent(currentEntityFile -> fileService.deleteById(currentEntityFile.getId()));
+            entity.setFile(newFile);
+        });
         return save(entity);
     }
 

@@ -1,11 +1,14 @@
 package ru.ds.yantarniy.admin.backend.core.employee.service;
 
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
+import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 
 public interface EmployeeService {
 
     EmployeeEntity create(EmployeeCreateRequest request);
+
+    EmployeeEntity update(EmployeeUpdateRequest request);
 
     EmployeeEntity save(EmployeeEntity entity);
 

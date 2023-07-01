@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.price.model.PriceCreateRequest;
+import ru.ds.yantarniy.admin.backend.core.price.model.PriceUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.price.service.PriceService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,12 +28,22 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public PriceEntity create(PriceCreateRequest request) {
-        FileEntity file = null;
-        if (request.getFileUploadRequest() != null) {
-            file = fileService.upload(request.getFileUploadRequest());
-        }
         PriceEntity entity = request.getEntity();
-        entity.setFile(file);
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity file = fileService.upload(fileUploadRequest);
+            entity.setFile(file);
+        });
+        return save(entity);
+    }
+
+    @Override
+    public PriceEntity update(PriceUpdateRequest request) {
+        PriceEntity entity = request.getEntity();
+        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
+            FileEntity newFile = fileService.upload(fileUploadRequest);
+            Optional.ofNullable(entity.getFile()).ifPresent(currentEntityFile -> fileService.deleteById(currentEntityFile.getId()));
+            entity.setFile(newFile);
+        });
         return save(entity);
     }
 
