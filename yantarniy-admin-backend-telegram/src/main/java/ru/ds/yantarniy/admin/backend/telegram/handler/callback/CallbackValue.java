@@ -12,6 +12,11 @@ public enum CallbackValue {
     SBER_QR("handleQrSberButton"),
     CALL_ADMIN("handleContactAdminButton"),
     CALL_MANAGER("handleContactManagerButton"),
+    OPEN_SALES("handleSalesButton"),
+    OPEN_SCHEDULE("handleSchedulesMenuButton"),
+    OPEN_CLUB_CARDS("handleClubCardButton"),
+    PRICE_SPA("handleSpaServiceMenuButton"),
+    EMPLOYEES("handleEmployeeMenuButton"),
     RETURN_MAIN_MENU("handleReturnMainMenuButton");
 
     String value;

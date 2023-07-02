@@ -18,7 +18,7 @@ import ru.ds.yantarniy.admin.backend.telegram.util.MarkupUtils;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CallManagerButtonHandler implements BotCallbackHandler {
 
-    static String CALL_MANAGER_LOCALE_MESSAGE = "other.callManager";
+    static String CALL_MANAGER_MESSAGE_SOURCE = "main.call-manager.text";
 
     LocaleMessageSource localeMessageSource;
 
@@ -27,7 +27,7 @@ public class CallManagerButtonHandler implements BotCallbackHandler {
         Message message = update.getCallbackQuery().getMessage();
         bot.changeMessage(
                 message,
-                localeMessageSource.getMessage(CALL_MANAGER_LOCALE_MESSAGE),
+                localeMessageSource.getMessage(CALL_MANAGER_MESSAGE_SOURCE),
                 MarkupUtils.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false)
         );
     }

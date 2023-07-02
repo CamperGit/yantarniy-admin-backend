@@ -20,11 +20,11 @@ import ru.ds.yantarniy.admin.backend.telegram.util.MarkupUtils;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SberQRButtonHandler implements BotCallbackHandler {
 
-    static String SBERQR_PNG = "other/sberqr.png";
+    static String SBERQR_PNG = "main/sberqr.png";
 
     static String SBERQR_FILENAME = "sberqr.png";
 
-    static String SBER_QR_MESSAGE_SOURCE = "other.sberqr";
+    static String SBER_QR_MESSAGE_SOURCE = "main.sberqr.text";
 
     LocaleMessageSource localeMessageSource;
 

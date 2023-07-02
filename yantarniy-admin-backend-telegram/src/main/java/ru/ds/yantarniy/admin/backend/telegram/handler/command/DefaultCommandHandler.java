@@ -14,14 +14,14 @@ import ru.ds.yantarniy.admin.backend.telegram.bot.YantarniyTelegramBot;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DefaultCommandHandler implements BotCommandHandler {
 
-    static String UNKNOWN_COMMAND_LOCALE_MESSAGE = "other.unknownNonCommandMessage";
+    static String UNKNOWN_COMMAND_MESSAGE_SOURCE = "main.unknown-non-command-message";
 
     LocaleMessageSource localeMessageSource;
 
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
         String chatId = update.getMessage().getChatId().toString();
-        bot.sendMainMenuMessage(chatId, localeMessageSource.getMessage(UNKNOWN_COMMAND_LOCALE_MESSAGE));
+        bot.sendMainMenuMessage(chatId, localeMessageSource.getMessage(UNKNOWN_COMMAND_MESSAGE_SOURCE));
     }
 
     @Override

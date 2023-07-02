@@ -20,14 +20,16 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.ds.yantarniy.admin.backend.core.locale.LocaleMessageSource;
+import ru.ds.yantarniy.admin.backend.telegram.exception.YantarniyBotTelegramException;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.BotCallbackHandler;
+import ru.ds.yantarniy.admin.backend.telegram.handler.callback.CallbackValue;
 import ru.ds.yantarniy.admin.backend.telegram.handler.command.BotCommandHandler;
 import ru.ds.yantarniy.admin.backend.telegram.handler.provider.BotCallbackHandlerProvider;
 import ru.ds.yantarniy.admin.backend.telegram.handler.provider.BotCommandHandlerProvider;
 import ru.ds.yantarniy.admin.backend.telegram.property.TelegramBotProperties;
 
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.*;
 
 @Component
@@ -35,19 +37,33 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class YantarniyTelegramBot extends TelegramLongPollingBot {
 
+    private static final String SALES_LABEL_MESSAGE_SOURCE = "main.sales.label";
+    private static final String SCHEDULE_LABEL_MESSAGE_SOURCE = "main.schedule.label";
+    private static final String CLUB_CARDS_LABEL_MESSAGE_SOURCE = "main.club-cards.label";
+    private static final String SPA_PRICE_LABEL_MESSAGE_SOURCE = "main.spa-price.label";
+    private static final String EMPLOYEES_LABEL_MESSAGE_SOURCE = "main.employees.label";
+    private static final String SBERQR_LABEL_MESSAGE_SOURCE = "main.sberqr.label";
+    private static final String CALL_MANAGER_LABEL_MESSAGE_SOURCE = "main.call-manager.label";
+    private static final String CALL_ADMIN_LABEL_MESSAGE_SOURCE = "main.call-admin.label";
+    static String MAIN_MENU_LOCALE_MESSAGE = "main.label";
+
+    static String START_MESSAGE_MESSAGE_SOURCE = "main.start-command";
     TelegramBotProperties botProperties;
 
     BotCallbackHandlerProvider botCallbackHandlerProvider;
 
     BotCommandHandlerProvider botCommandHandlerProvider;
 
+    LocaleMessageSource localeMessageSource;
+
     public YantarniyTelegramBot(TelegramBotProperties botProperties,
                                 BotCallbackHandlerProvider botCallbackHandlerProvider,
-                                BotCommandHandlerProvider botCommandHandlerProvider) {
+                                BotCommandHandlerProvider botCommandHandlerProvider, LocaleMessageSource localeMessageSource) {
         super(new DefaultBotOptions());
         this.botProperties = botProperties;
         this.botCallbackHandlerProvider = botCallbackHandlerProvider;
         this.botCommandHandlerProvider = botCommandHandlerProvider;
+        this.localeMessageSource = localeMessageSource;
     }
 
     @Override
@@ -79,8 +95,8 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
                 botCommandHandler.handle(this, update);
             }
         } catch (TelegramApiException e) {
-            //e.printStackTrace();
-            log.error("Commands and none commands handling exception");
+            log.error("Commands and none commands handling exception", e);
+            throw new YantarniyBotTelegramException("Error while trying to handle telegram command or callback query", e);
         }
     }
 
@@ -161,31 +177,31 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
-        InlineKeyboardButton salesButton = new InlineKeyboardButton("Акции");
-        InlineKeyboardButton scheduleButton = new InlineKeyboardButton("Расписание");
-        InlineKeyboardButton clubCartsButton = new InlineKeyboardButton("Клубные карты");
-        InlineKeyboardButton spaServicesButton = new InlineKeyboardButton("Прайс-СПА");
-        InlineKeyboardButton employeesButton = new InlineKeyboardButton("Сотрудники");
-        InlineKeyboardButton sberQrButton = new InlineKeyboardButton("Плати QR от Сбера");
-        InlineKeyboardButton contactAdminButton = new InlineKeyboardButton("Запись в СПА");
-        InlineKeyboardButton contactManagerButton = new InlineKeyboardButton("Связь с менеджером");
+        InlineKeyboardButton salesButton = new InlineKeyboardButton(localeMessageSource.getMessage(SALES_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton scheduleButton = new InlineKeyboardButton(localeMessageSource.getMessage(SCHEDULE_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton clubCardsButton = new InlineKeyboardButton(localeMessageSource.getMessage(CLUB_CARDS_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton spaServicesButton = new InlineKeyboardButton(localeMessageSource.getMessage(SPA_PRICE_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton employeesButton = new InlineKeyboardButton(localeMessageSource.getMessage(EMPLOYEES_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton sberQrButton = new InlineKeyboardButton(localeMessageSource.getMessage(SBERQR_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton contactAdminButton = new InlineKeyboardButton(localeMessageSource.getMessage(CALL_ADMIN_LABEL_MESSAGE_SOURCE));
+        InlineKeyboardButton contactManagerButton = new InlineKeyboardButton(localeMessageSource.getMessage(CALL_MANAGER_LABEL_MESSAGE_SOURCE));
 
 
-        salesButton.setCallbackData("handleSalesButton");
-        scheduleButton.setCallbackData("handleSchedulesMenuButton");
-        clubCartsButton.setCallbackData("handleClubCardButton");
-        spaServicesButton.setCallbackData("handleSpaServiceMenuButton");
-        employeesButton.setCallbackData("handleEmployeeMenuButton");
-        sberQrButton.setCallbackData("handleQrSberButton");
-        contactAdminButton.setCallbackData("handleContactAdminButton");
-        contactManagerButton.setCallbackData("handleContactManagerButton");
+        salesButton.setCallbackData(CallbackValue.OPEN_SALES.getValue());
+        scheduleButton.setCallbackData(CallbackValue.OPEN_SCHEDULE.getValue());
+        clubCardsButton.setCallbackData(CallbackValue.OPEN_CLUB_CARDS.getValue());
+        spaServicesButton.setCallbackData(CallbackValue.OPEN_CLUB_CARDS.getValue());
+        employeesButton.setCallbackData(CallbackValue.EMPLOYEES.getValue());
+        sberQrButton.setCallbackData(CallbackValue.SBER_QR.getValue());
+        contactAdminButton.setCallbackData(CallbackValue.CALL_ADMIN.getValue());
+        contactManagerButton.setCallbackData(CallbackValue.CALL_MANAGER.getValue());
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
         firstRow.add(employeesButton);
         firstRow.add(sberQrButton);
 
         List<InlineKeyboardButton> secondRow = new ArrayList<>();
-        secondRow.add(clubCartsButton);
+        secondRow.add(clubCardsButton);
         secondRow.add(scheduleButton);
 
         List<InlineKeyboardButton> thirdRow = new ArrayList<>();
@@ -205,8 +221,7 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
     }
 
     public void sendReplyMarkup(String chatId) throws TelegramApiException {
-        SendMessage sendMessage = new SendMessage(chatId, "При необходимости открыть главное меню воспользуйтесь " +
-                "командой /start или соответствующей кнопкой в нижней части экрана");
+        SendMessage sendMessage = new SendMessage(chatId, localeMessageSource.getMessage(START_MESSAGE_MESSAGE_SOURCE));
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
@@ -214,7 +229,7 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow firstRow = new KeyboardRow();
-        KeyboardButton button = new KeyboardButton("Главное меню");
+        KeyboardButton button = new KeyboardButton(localeMessageSource.getMessage(MAIN_MENU_LOCALE_MESSAGE));
         firstRow.add(button);
 
         keyboard.add(firstRow);
@@ -222,5 +237,10 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
 
         this.execute(sendMessage);
+    }
+
+    public void moveToMainMenu(String chatId, Integer messageId) throws TelegramApiException {
+        deleteMessage(chatId, messageId);
+        sendMainMenuMessage(chatId, localeMessageSource.getMessage(MAIN_MENU_LOCALE_MESSAGE));
     }
 }

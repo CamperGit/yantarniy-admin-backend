@@ -22,7 +22,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StartCommandHandler implements BotCommandHandler {
 
-    static String MAIN_MENU_MENU_LABEL_MESSAGE_SOURCE = "mainMenu.menuLabel";
+    static String MAIN_MENU_MENU_LABEL_MESSAGE_SOURCE = "main.label";
 
     static String START_COMMAND = "/start";
 
