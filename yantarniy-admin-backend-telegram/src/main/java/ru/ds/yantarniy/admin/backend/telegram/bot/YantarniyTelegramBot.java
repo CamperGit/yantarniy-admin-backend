@@ -37,17 +37,26 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class YantarniyTelegramBot extends TelegramLongPollingBot {
 
-    private static final String SALES_LABEL_MESSAGE_SOURCE = "main.sales.label";
-    private static final String SCHEDULE_LABEL_MESSAGE_SOURCE = "main.schedule.label";
-    private static final String CLUB_CARDS_LABEL_MESSAGE_SOURCE = "main.club-cards.label";
-    private static final String SPA_PRICE_LABEL_MESSAGE_SOURCE = "main.spa-price.label";
-    private static final String EMPLOYEES_LABEL_MESSAGE_SOURCE = "main.employees.label";
-    private static final String SBERQR_LABEL_MESSAGE_SOURCE = "main.sberqr.label";
-    private static final String CALL_MANAGER_LABEL_MESSAGE_SOURCE = "main.call-manager.label";
-    private static final String CALL_ADMIN_LABEL_MESSAGE_SOURCE = "main.call-admin.label";
+    static String SALES_LABEL_MESSAGE_SOURCE = "main.sales.label";
+
+    static String SCHEDULE_LABEL_MESSAGE_SOURCE = "main.schedule.label";
+
+    static String CLUB_CARDS_LABEL_MESSAGE_SOURCE = "main.club-cards.label";
+
+    static String SPA_PRICE_LABEL_MESSAGE_SOURCE = "main.spa-price.label";
+
+    static String EMPLOYEES_LABEL_MESSAGE_SOURCE = "main.employees.label";
+
+    static String SBERQR_LABEL_MESSAGE_SOURCE = "main.sberqr.label";
+
+    static String CALL_MANAGER_LABEL_MESSAGE_SOURCE = "main.call-manager.label";
+
+    static String CALL_ADMIN_LABEL_MESSAGE_SOURCE = "main.call-admin.label";
+
     static String MAIN_MENU_LOCALE_MESSAGE = "main.label";
 
     static String START_MESSAGE_MESSAGE_SOURCE = "main.start-command";
+
     TelegramBotProperties botProperties;
 
     BotCallbackHandlerProvider botCallbackHandlerProvider;
