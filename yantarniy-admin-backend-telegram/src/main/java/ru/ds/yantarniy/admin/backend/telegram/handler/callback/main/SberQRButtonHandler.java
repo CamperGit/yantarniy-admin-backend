@@ -13,7 +13,7 @@ import ru.ds.yantarniy.admin.backend.core.locale.LocaleMessageSource;
 import ru.ds.yantarniy.admin.backend.telegram.bot.YantarniyTelegramBot;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.BotCallbackHandler;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.CallbackValue;
-import ru.ds.yantarniy.admin.backend.telegram.util.MarkupUtils;
+import ru.ds.yantarniy.admin.backend.telegram.service.MarkupService;
 
 @Component
 @RequiredArgsConstructor
@@ -28,6 +28,8 @@ public class SberQRButtonHandler implements BotCallbackHandler {
 
     LocaleMessageSource localeMessageSource;
 
+    MarkupService markupService;
+
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
         Message message = update.getCallbackQuery().getMessage();
@@ -37,9 +39,9 @@ public class SberQRButtonHandler implements BotCallbackHandler {
         sendPhoto.setChatId(chatId);
         sendPhoto.setPhoto(new InputFile(Thread.currentThread().getContextClassLoader().getResourceAsStream(SBERQR_PNG), SBERQR_FILENAME));
         sendPhoto.setCaption(localeMessageSource.getMessage(SBER_QR_MESSAGE_SOURCE));
-        sendPhoto.setReplyMarkup(MarkupUtils.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false));
+        sendPhoto.setReplyMarkup(markupService.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false));
 
-        bot.deleteMessage(chatId, message.getMessageId());
+        bot.deleteMessage(message);
         bot.execute(sendPhoto);
     }
 

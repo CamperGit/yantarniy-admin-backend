@@ -16,7 +16,6 @@ import java.nio.charset.StandardCharsets;
         CoreConfiguration.class,
         BotConfiguration.class
 })
-@ComponentScan(basePackages = "ru.ds.yantarniy.admin.backend.telegram")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TelegramConfiguration {

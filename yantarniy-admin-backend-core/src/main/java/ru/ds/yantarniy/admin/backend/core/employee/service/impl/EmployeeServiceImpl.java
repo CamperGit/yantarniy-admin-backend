@@ -4,11 +4,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.service.EmployeeService;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
+import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeRepository;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
@@ -66,5 +70,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             fileService.deleteById(file.getId());
         }
         employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<EmployeeEntity> findAll(Specification<EmployeeEntity> specification, PageRequest request) {
+        return employeeRepository.findAll(specification, request);
     }
 }

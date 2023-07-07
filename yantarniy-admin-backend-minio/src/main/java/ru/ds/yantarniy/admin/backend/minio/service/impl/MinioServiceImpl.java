@@ -31,7 +31,7 @@ public class MinioServiceImpl implements MinioService {
 
     @Override
     public PutMinioObjectResponse putObject(PutMinioObjectRequest request) {
-        log.info("[MINIO_SERVICE] trying to put object into minio storage with name {}", request.getObject());
+        log.debug("[MINIO_SERVICE] trying to put object into minio storage with name {}", request.getObject());
         try (InputStream inputStream = request.getInputStream()) {
             ObjectWriteResponse objectWriteResponse = minioClient.putObject(
                     PutObjectArgs.builder()
@@ -45,7 +45,7 @@ public class MinioServiceImpl implements MinioService {
                     .etag(objectWriteResponse.etag())
                     .object(objectWriteResponse.object())
                     .build();
-            log.info("[MINIO_SERVICE] successfully put object into minio storage with name {}", request.getObject());
+            log.debug("[MINIO_SERVICE] successfully put object into minio storage with name {}", request.getObject());
             return response;
         } catch (Exception e) {
             log.error("[MINIO_SERVICE] error while trying to put object into minio storage with name {}", request.getObject());
@@ -55,7 +55,7 @@ public class MinioServiceImpl implements MinioService {
 
     @Override
     public GetMinioObjectResponse getObject(GetMinioObjectRequest request) {
-        log.info("[MINIO_SERVICE] trying to get object from minio storage with name {}", request.getObject());
+        log.debug("[MINIO_SERVICE] trying to get object from minio storage with name {}", request.getObject());
         try {
             GetObjectResponse getObjectResponse = minioClient
                     .getObject(GetObjectArgs.builder()
@@ -66,7 +66,7 @@ public class MinioServiceImpl implements MinioService {
             GetMinioObjectResponse response = GetMinioObjectResponse.builder()
                     .inputStream(getObjectResponse)
                     .build();
-            log.info("[MINIO_SERVICE] successfully get object from minio storage with name {}", request.getObject());
+            log.debug("[MINIO_SERVICE] successfully get object from minio storage with name {}", request.getObject());
             return response;
         } catch (Exception e) {
             log.error("[MINIO_SERVICE] error while trying to get object from minio storage with name {}", request.getObject());
@@ -76,13 +76,13 @@ public class MinioServiceImpl implements MinioService {
 
     @Override
     public void removeObject(RemoveMinioObjectRequest request) {
-        log.info("[MINIO_SERVICE] trying to remove object from minio storage with name {}", request.getObject());
+        log.debug("[MINIO_SERVICE] trying to remove object from minio storage with name {}", request.getObject());
         try {
             minioClient.removeObject(RemoveObjectArgs.builder()
                     .bucket(minioProperties.getBucketName())
                     .object(request.getObject())
                     .build());
-            log.info("[MINIO_SERVICE] successfully remove object from minio storage with name {}", request.getObject());
+            log.debug("[MINIO_SERVICE] successfully remove object from minio storage with name {}", request.getObject());
         } catch (Exception e) {
             log.error("[MINIO_SERVICE] error while trying to remove object from minio storage with name {}", request.getObject());
             throw new MinioServiceException("Error while trying to remove object from minio object storage", e);

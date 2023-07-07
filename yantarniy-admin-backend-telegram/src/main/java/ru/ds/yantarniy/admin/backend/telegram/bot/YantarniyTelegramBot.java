@@ -25,8 +25,8 @@ import ru.ds.yantarniy.admin.backend.telegram.exception.YantarniyBotTelegramExce
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.BotCallbackHandler;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.CallbackValue;
 import ru.ds.yantarniy.admin.backend.telegram.handler.command.BotCommandHandler;
-import ru.ds.yantarniy.admin.backend.telegram.handler.provider.BotCallbackHandlerProvider;
-import ru.ds.yantarniy.admin.backend.telegram.handler.provider.BotCommandHandlerProvider;
+import ru.ds.yantarniy.admin.backend.telegram.provider.BotCallbackHandlerProvider;
+import ru.ds.yantarniy.admin.backend.telegram.provider.BotCommandHandlerProvider;
 import ru.ds.yantarniy.admin.backend.telegram.property.TelegramBotProperties;
 
 import java.io.InputStream;
@@ -116,7 +116,7 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
             newMessage.enableHtml(true);
             newMessage.setReplyMarkup(markup);
 
-            this.deleteMessage(chatId, message.getMessageId());
+            this.deleteMessage(message);
             this.execute(newMessage);
         } else {
             EditMessageText newText = new EditMessageText();
@@ -130,8 +130,8 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    public void deleteMessage(String chatId, Integer messageId) throws TelegramApiException {
-        this.execute(new DeleteMessage(chatId, messageId));
+    public void deleteMessage(Message message) throws TelegramApiException {
+        this.execute(new DeleteMessage(message.getChatId().toString(), message.getMessageId()));
     }
 
     public void changeMessagePhoto(String chatId, Integer messageId, InlineKeyboardMarkup markup,
@@ -153,13 +153,15 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         this.execute(editMessageMedia);
     }
 
-    public void scrollMenuItem(String chatId, Message message, CallbackQuery query, InlineKeyboardMarkup markup, InputStream image, String filename, String description) throws TelegramApiException {
+    public void scrollMenuItem(CallbackQuery query, InlineKeyboardMarkup markup, InputStream image, String filename, String description) throws TelegramApiException {
+        Message message = query.getMessage();
         int messageId = message.getMessageId();
+        String chatId = message.getChatId().toString();
         if (image != null) {
             if (query.getMessage().hasPhoto()) {
                 this.changeMessagePhoto(chatId, messageId, markup, image, description, filename);
             } else {
-                this.deleteMessage(chatId, messageId);
+                this.deleteMessage(message);
                 this.execute(SendPhoto.builder()
                         .chatId(chatId)
                         .photo(new InputFile(image, filename))
@@ -169,7 +171,7 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
             }
         } else {
             if (query.getMessage().hasPhoto()) {
-                this.deleteMessage(chatId, messageId);
+                this.deleteMessage(message);
                 this.execute(SendMessage.builder()
                         .replyMarkup(markup)
                         .chatId(chatId)
@@ -248,8 +250,8 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         this.execute(sendMessage);
     }
 
-    public void moveToMainMenu(String chatId, Integer messageId) throws TelegramApiException {
-        deleteMessage(chatId, messageId);
-        sendMainMenuMessage(chatId, localeMessageSource.getMessage(MAIN_MENU_LOCALE_MESSAGE));
+    public void moveToMainMenu(Message message) throws TelegramApiException {
+        deleteMessage(message);
+        sendMainMenuMessage(message.getChatId().toString(), localeMessageSource.getMessage(MAIN_MENU_LOCALE_MESSAGE));
     }
 }

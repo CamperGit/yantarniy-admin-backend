@@ -4,11 +4,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.service.SaleService;
+import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceRepository;
@@ -22,7 +26,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SaleServiceImpl implements SaleService {
+public class SaleServiceImpl implements SaleService, SpecificationsSearchService<SaleEntity> {
 
     SaleRepository saleRepository;
 
@@ -68,5 +72,10 @@ public class SaleServiceImpl implements SaleService {
             fileService.deleteById(file.getId());
         }
         saleRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<SaleEntity> findAll(Specification<SaleEntity> specification, PageRequest request) {
+        return saleRepository.findAll(specification, request);
     }
 }

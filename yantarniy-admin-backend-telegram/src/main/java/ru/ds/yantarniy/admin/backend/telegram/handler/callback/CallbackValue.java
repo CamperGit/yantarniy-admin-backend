@@ -14,6 +14,8 @@ public enum CallbackValue {
     CALL_MANAGER("handleContactManagerButton"),
     OPEN_SALES("handleSalesButton"),
     OPEN_SCHEDULE("handleSchedulesMenuButton"),
+    CURRENT_SCHEDULE("handleFitnessCurrentScheduleButton"),
+    SCHEDULE_CHANGES("handleFitnessChangesButton"),
     OPEN_CLUB_CARDS("handleClubCardButton"),
     PRICE_SPA("handleSpaServiceMenuButton"),
     EMPLOYEES("handleEmployeeMenuButton"),

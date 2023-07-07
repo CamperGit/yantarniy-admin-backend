@@ -4,9 +4,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
+import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileRepository;
 import ru.ds.yantarniy.admin.backend.dao.specification.Specifications;
@@ -112,5 +116,10 @@ public class FileServiceImpl implements FileService {
             return String.format(FILE_WITHOUT_NUM_FORMAT, base, extension);
         }
         return String.format(FILE_WITH_NUM_FORMAT, base, num, extension);
+    }
+
+    @Override
+    public Page<FileEntity> findAll(Specification<FileEntity> specification, PageRequest request) {
+        return fileRepository.findAll(specification, request);
     }
 }

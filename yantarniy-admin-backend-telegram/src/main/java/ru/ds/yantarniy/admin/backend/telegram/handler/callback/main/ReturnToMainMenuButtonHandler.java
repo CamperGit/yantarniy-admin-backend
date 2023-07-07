@@ -18,8 +18,7 @@ public class ReturnToMainMenuButtonHandler implements BotCallbackHandler {
 
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
-        Message message = update.getCallbackQuery().getMessage();
-        bot.moveToMainMenu(message.getChatId().toString(), message.getMessageId());
+        bot.moveToMainMenu(update.getCallbackQuery().getMessage());
     }
 
     @Override

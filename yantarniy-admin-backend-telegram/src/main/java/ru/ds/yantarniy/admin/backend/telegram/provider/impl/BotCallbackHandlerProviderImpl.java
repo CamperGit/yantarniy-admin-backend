@@ -1,11 +1,11 @@
-package ru.ds.yantarniy.admin.backend.telegram.handler.provider.impl;
+package ru.ds.yantarniy.admin.backend.telegram.provider.impl;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.BotCallbackHandler;
-import ru.ds.yantarniy.admin.backend.telegram.handler.provider.BotCallbackHandlerProvider;
+import ru.ds.yantarniy.admin.backend.telegram.provider.BotCallbackHandlerProvider;
 
 import java.util.List;
 

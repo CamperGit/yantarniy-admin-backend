@@ -1,4 +1,4 @@
-package ru.ds.yantarniy.admin.backend.telegram.handler.provider;
+package ru.ds.yantarniy.admin.backend.telegram.provider;
 
 import ru.ds.yantarniy.admin.backend.telegram.handler.command.BotCommandHandler;
 

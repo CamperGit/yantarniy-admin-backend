@@ -11,7 +11,7 @@ import ru.ds.yantarniy.admin.backend.core.locale.LocaleMessageSource;
 import ru.ds.yantarniy.admin.backend.telegram.bot.YantarniyTelegramBot;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.BotCallbackHandler;
 import ru.ds.yantarniy.admin.backend.telegram.handler.callback.CallbackValue;
-import ru.ds.yantarniy.admin.backend.telegram.util.MarkupUtils;
+import ru.ds.yantarniy.admin.backend.telegram.service.MarkupService;
 
 @Component
 @RequiredArgsConstructor
@@ -22,13 +22,15 @@ public class CallAdminButtonHandler implements BotCallbackHandler {
 
     LocaleMessageSource localeMessageSource;
 
+    MarkupService markupService;
+
     @Override
     public void handle(YantarniyTelegramBot bot, Update update) throws TelegramApiException {
         Message message = update.getCallbackQuery().getMessage();
         bot.changeMessage(
                 message,
                 localeMessageSource.getMessage(CALL_ADMIN_MESSAGE_SOURCE),
-                MarkupUtils.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false)
+                markupService.getReturnMarkup(CallbackValue.RETURN_MAIN_MENU.getValue(), false)
         );
     }
 

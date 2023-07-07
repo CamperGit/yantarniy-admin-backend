@@ -17,6 +17,5 @@ import ru.ds.yantarniy.admin.backend.minio.config.MinioConfiguration;
 })
 @EnableScheduling
 @EnableConfigurationProperties
-@ComponentScan(basePackages = { "ru.ds.yantarniy.admin.backend.core" })
 public class CoreConfiguration {
 }

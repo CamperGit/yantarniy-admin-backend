@@ -4,11 +4,15 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.schedule.model.ScheduleCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.schedule.model.ScheduleUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.schedule.service.ScheduleService;
+import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleRepository;
@@ -16,6 +20,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -68,5 +73,11 @@ public class ScheduleServiceImpl implements ScheduleService {
             fileService.deleteById(file.getId());
         }
         scheduleRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ScheduleEntity> findAll(Specification<ScheduleEntity> specification, PageRequest request) {
+        Page<ScheduleEntity> all = scheduleRepository.findAll(specification, request);
+        return all;
     }
 }
