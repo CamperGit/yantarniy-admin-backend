@@ -15,6 +15,8 @@ public interface ScrollStateHandler<T> {
 
     String SCROLL_STATE_CURRENT_POSITION_REGEX = "\\{\\d+\\}";
 
+    int SCROLL_STATE_COUNTER_INCREMENT = 1;
+
     /**
      * Обрабатывает состояние скролла фотографии для получения сущности из базы данных. Ищет в БД сущность типа T.
      * При необходимости добавляет к поиску доп.фильтры additionalFilters
@@ -46,5 +48,15 @@ public interface ScrollStateHandler<T> {
         }
         String positionString = matcher.group().replaceAll("[\\{\\}]", "");
         return Long.valueOf(positionString);
+    }
+
+    default boolean isCanScroll(ScrollResponse<T> response, ScrollState state) {
+        if (state == ScrollState.PREVIOUS && response.isFirst()) {
+            return false;
+        }
+        if (state == ScrollState.NEXT && response.isLast()) {
+            return false;
+        }
+        return true;
     }
 }

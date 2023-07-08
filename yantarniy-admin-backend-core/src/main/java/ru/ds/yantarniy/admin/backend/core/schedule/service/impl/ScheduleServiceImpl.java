@@ -77,7 +77,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public Page<ScheduleEntity> findAll(Specification<ScheduleEntity> specification, PageRequest request) {
-        Page<ScheduleEntity> all = scheduleRepository.findAll(specification, request);
-        return all;
+        return scheduleRepository.findAll(specification, request);
+    }
+
+    @Override
+    public long countItemsByFilter(Specification<ScheduleEntity> specification) {
+        return scheduleRepository.count(specification);
     }
 }

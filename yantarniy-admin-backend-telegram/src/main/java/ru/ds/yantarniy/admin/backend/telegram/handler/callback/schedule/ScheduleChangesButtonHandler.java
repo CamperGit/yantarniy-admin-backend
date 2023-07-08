@@ -64,11 +64,12 @@ public class ScheduleChangesButtonHandler implements BotCallbackHandler {
                 Specifications.equalOrReturnNull("type.type", ScheduleType.SCHEDULE_CHANGE.getCode())
         );
         ScrollResponse<ScheduleEntity> scrollResponse = scrollHandler.getEntityFromData(data, additionalSpecifications, scheduleService);
-
-        Optional.ofNullable(scrollResponse.getValue()).ifPresentOrElse(
-                (entity) -> handleNotEmptyScrollResponse(scrollResponse, bot, callbackQuery),
-                () -> handleEmptyScrollResponse(callbackQuery, bot)
-        );
+        if (scrollHandler.isCanScroll(scrollResponse, scrollState)) {
+            Optional.ofNullable(scrollResponse.getValue()).ifPresentOrElse(
+                    (entity) -> handleNotEmptyScrollResponse(scrollResponse, bot, callbackQuery),
+                    () -> handleEmptyScrollResponse(callbackQuery, bot)
+            );
+        }
     }
 
     private void handleNotEmptyScrollResponse(ScrollResponse<ScheduleEntity> scrollResponse, YantarniyTelegramBot bot, CallbackQuery callbackQuery) {

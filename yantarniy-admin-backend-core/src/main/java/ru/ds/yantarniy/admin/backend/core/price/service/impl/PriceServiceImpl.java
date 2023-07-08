@@ -76,4 +76,9 @@ public class PriceServiceImpl implements PriceService {
     public Page<PriceEntity> findAll(Specification<PriceEntity> specification, PageRequest request) {
         return priceRepository.findAll(specification, request);
     }
+
+    @Override
+    public long countItemsByFilter(Specification<PriceEntity> specification) {
+        return priceRepository.count(specification);
+    }
 }

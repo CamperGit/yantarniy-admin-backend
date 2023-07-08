@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
-import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileRepository;
 import ru.ds.yantarniy.admin.backend.dao.specification.Specifications;
@@ -121,5 +120,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public Page<FileEntity> findAll(Specification<FileEntity> specification, PageRequest request) {
         return fileRepository.findAll(specification, request);
+    }
+
+    @Override
+    public long countItemsByFilter(Specification<FileEntity> specification) {
+        return fileRepository.count(specification);
     }
 }

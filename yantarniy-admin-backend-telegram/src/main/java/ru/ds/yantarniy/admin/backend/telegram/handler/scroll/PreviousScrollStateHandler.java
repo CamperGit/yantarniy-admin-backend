@@ -24,6 +24,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PreviousScrollStateHandler<T> implements ScrollStateHandler<T> {
 
+    static int LAST_ELEMENT_SIZE = 1;
+
     static String ID = "id";
 
     static int PAGE_NUMBER = 0;
@@ -40,14 +42,19 @@ public class PreviousScrollStateHandler<T> implements ScrollStateHandler<T> {
         Page<T> content = service.findAll(Specifications.And
                 .<T>builder()
                 .specifications(specifications)
-                .build(), PageRequest.of(PAGE_NUMBER, PAGE_SIZE, Sort.Direction.ASC, ID));
+                .build(), PageRequest.of(PAGE_NUMBER, PAGE_SIZE, Sort.Direction.DESC, ID));
+
+        long numberOfElements = service.countItemsByFilter(Specifications.And
+                .<T>builder()
+                .specifications(additionalFilters)
+                .build());
 
         return ScrollResponse.<T>builder()
-                .first(content.isFirst())
-                .last(content.isLast())
-                .numberOfItems(content.getTotalElements())
-                .currentPosition(getPositionFromData(data))
-                .value(CollectionUtils.firstElement(content.getContent()))
+                .first(content.isFirst() && content.getTotalElements() == LAST_ELEMENT_SIZE)
+                .last(content.isLast() && content.getTotalElements() == LAST_ELEMENT_SIZE)
+                .numberOfItems(numberOfElements)
+                .currentPosition(getPositionFromData(data) - SCROLL_STATE_COUNTER_INCREMENT)
+                .value(CollectionUtils.lastElement(content.getContent()))
                 .build();
     }
 

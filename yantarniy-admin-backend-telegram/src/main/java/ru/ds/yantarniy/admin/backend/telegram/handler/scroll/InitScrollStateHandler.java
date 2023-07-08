@@ -41,10 +41,15 @@ public class InitScrollStateHandler<T> implements ScrollStateHandler<T> {
                 .specifications(specifications)
                 .build(), PageRequest.of(PAGE_NUMBER, PAGE_SIZE, Sort.Direction.ASC, ID));
 
+        long numberOfElements = service.countItemsByFilter(Specifications.And
+                .<T>builder()
+                .specifications(additionalFilters)
+                .build());
+
         return ScrollResponse.<T>builder()
                 .first(content.isFirst())
                 .last(content.isLast())
-                .numberOfItems(content.getTotalElements())
+                .numberOfItems(numberOfElements)
                 .currentPosition(CURRENT_POSITION_INIT_DEFAULT)
                 .value(CollectionUtils.firstElement(content.getContent()))
                 .build();

@@ -24,13 +24,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NextScrollStateHandler<T> implements ScrollStateHandler<T> {
 
+    static int LAST_ELEMENT_SIZE = 1;
+
     static String ID = "id";
 
     static int PAGE_NUMBER = 0;
 
     static int PAGE_SIZE = 2;
-
-    static String ID_REGEX = "\\[\\d+\\]";
 
     @Override
     public ScrollResponse<T> getEntityFromData(String data, List<Specification<T>> additionalFilters, SpecificationsSearchService<T> service) {
@@ -44,11 +44,16 @@ public class NextScrollStateHandler<T> implements ScrollStateHandler<T> {
                         .specifications(specifications)
                         .build(), PageRequest.of(PAGE_NUMBER, PAGE_SIZE, Sort.Direction.ASC, ID));
 
+        long numberOfElements = service.countItemsByFilter(Specifications.And
+                .<T>builder()
+                .specifications(additionalFilters)
+                .build());
+
         return ScrollResponse.<T>builder()
-                .first(content.isFirst())
-                .last(content.isLast())
-                .numberOfItems(content.getTotalElements())
-                .currentPosition(getPositionFromData(data))
+                .first(content.isFirst() && content.getTotalElements() == LAST_ELEMENT_SIZE)
+                .last(content.isLast() && content.getTotalElements() == LAST_ELEMENT_SIZE)
+                .numberOfItems(numberOfElements)
+                .currentPosition(getPositionFromData(data) + SCROLL_STATE_COUNTER_INCREMENT)
                 .value(CollectionUtils.lastElement(content.getContent()))
                 .build();
     }

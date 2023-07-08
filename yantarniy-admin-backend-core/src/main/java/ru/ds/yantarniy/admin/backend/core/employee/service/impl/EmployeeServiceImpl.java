@@ -76,4 +76,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Page<EmployeeEntity> findAll(Specification<EmployeeEntity> specification, PageRequest request) {
         return employeeRepository.findAll(specification, request);
     }
+
+    @Override
+    public long countItemsByFilter(Specification<EmployeeEntity> specification) {
+        return employeeRepository.count(specification);
+    }
 }

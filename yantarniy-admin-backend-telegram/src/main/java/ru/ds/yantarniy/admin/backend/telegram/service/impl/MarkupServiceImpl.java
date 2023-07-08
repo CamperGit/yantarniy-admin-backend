@@ -48,8 +48,8 @@ public class MarkupServiceImpl implements MarkupService {
         InlineKeyboardButton returnButton = new InlineKeyboardButton(localeMessageSource.getMessage(MARKUP_BACK_MESSAGE_SOURCE));
         InlineKeyboardButton mainMenuButton = new InlineKeyboardButton(localeMessageSource.getMessage(MARKUP_MAIN_MENU_MESSAGE_SOURCE));
 
-        prevButton.setCallbackData(getScrollCallbackValueFromState(ScrollState.PREVIOUS, callbackBaseData, currentItemId, currentItem, numberOfItems));
-        nextButton.setCallbackData(getScrollCallbackValueFromState(ScrollState.NEXT, callbackBaseData, currentItemId, currentItem, numberOfItems));
+        prevButton.setCallbackData(getScrollCallbackValueFromState(ScrollState.PREVIOUS, callbackBaseData, currentItemId, currentItem));
+        nextButton.setCallbackData(getScrollCallbackValueFromState(ScrollState.NEXT, callbackBaseData, currentItemId, currentItem));
         countButton.setCallbackData("null");
         returnButton.setCallbackData(exitButtonCallbackData);
         mainMenuButton.setCallbackData(CallbackValue.RETURN_MAIN_MENU.getValue());
@@ -80,16 +80,8 @@ public class MarkupServiceImpl implements MarkupService {
         return inlineKeyboardMarkup;
     }
 
-    private String getScrollCallbackValueFromState(ScrollState state, String baseCallBack, long currentItemId, long currentPosition, long numberOfItems) {
-        long position;
-        if (state.equals(ScrollState.PREVIOUS)) {
-            currentPosition--;
-            position = currentPosition < MIN_POSITION_NUMBER ? MIN_POSITION_NUMBER : currentPosition;
-        } else {
-            currentPosition++;
-            position = Math.min(currentPosition, numberOfItems);
-        }
-        return String.format(SCROLL_CALLBACK_FORMAT, baseCallBack, state.getValue(), currentItemId, position);
+    private String getScrollCallbackValueFromState(ScrollState state, String baseCallBack, long currentItemId, long currentPosition) {
+        return String.format(SCROLL_CALLBACK_FORMAT, baseCallBack, state.getValue(), currentItemId, currentPosition);
     }
 
     @Override

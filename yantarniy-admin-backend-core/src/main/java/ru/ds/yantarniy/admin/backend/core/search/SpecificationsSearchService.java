@@ -7,4 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 public interface SpecificationsSearchService<T> {
 
     Page<T> findAll(Specification<T> specification, PageRequest request);
+
+    long countItemsByFilter(Specification<T> specification);
 }

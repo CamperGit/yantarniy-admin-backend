@@ -78,4 +78,9 @@ public class SaleServiceImpl implements SaleService, SpecificationsSearchService
     public Page<SaleEntity> findAll(Specification<SaleEntity> specification, PageRequest request) {
         return saleRepository.findAll(specification, request);
     }
+
+    @Override
+    public long countItemsByFilter(Specification<SaleEntity> specification) {
+        return saleRepository.count(specification);
+    }
 }
