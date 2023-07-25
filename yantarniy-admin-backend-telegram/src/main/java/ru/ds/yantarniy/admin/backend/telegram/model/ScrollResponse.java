@@ -2,6 +2,7 @@ package ru.ds.yantarniy.admin.backend.telegram.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.lang.Nullable;
 
 @Data
 @Builder

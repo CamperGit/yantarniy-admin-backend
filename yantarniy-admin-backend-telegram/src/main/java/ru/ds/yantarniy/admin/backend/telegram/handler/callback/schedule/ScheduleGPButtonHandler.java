@@ -27,6 +27,7 @@ import ru.ds.yantarniy.admin.backend.telegram.service.MarkupService;
 import ru.ds.yantarniy.admin.backend.telegram.service.ScrollHelperService;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +35,9 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ScheduleChangesButtonHandler implements BotCallbackHandler, ScrollHelperService<ScheduleEntity> {
+public class ScheduleGPButtonHandler implements BotCallbackHandler, ScrollHelperService<ScheduleEntity> {
 
-    static String FITNESS_SCHEDULES_CHANGES_EMPTY_MESSAGE_SOURCE = "fitness.schedules.changes.empty";
+    static String FITNESS_SCHEDULES_GP_EMPTY_MESSAGE_SOURCE = "fitness.schedules.gp.empty";
 
     LocaleMessageSource localeMessageSource;
 
@@ -60,7 +61,7 @@ public class ScheduleChangesButtonHandler implements BotCallbackHandler, ScrollH
                 scrollResponse.getNumberOfItems(),
                 value.getId(),
                 scrollResponse.getCurrentPosition(),
-                CallbackValue.SCHEDULE_CHANGES.getValue(),
+                CallbackValue.CURRENT_SCHEDULE.getValue(),
                 CallbackValue.OPEN_SCHEDULE.getValue(),
                 null,
                 null
@@ -97,13 +98,13 @@ public class ScheduleChangesButtonHandler implements BotCallbackHandler, ScrollH
     @Override
     public List<Specification<ScheduleEntity>> getAdditionalSpecifications() {
         return Collections.singletonList(
-                Specifications.equalOrReturnNull("type.type", ScheduleType.SCHEDULE_CHANGE.getCode())
+                Specifications.inOrReturnNull("type.type", Arrays.asList(ScheduleType.GROUP_SCHEDULE.getCode(), ScheduleType.SCHEDULE_DESCRIPTION.getCode()))
         );
     }
 
     @Override
     public String getEmptyScrollResponseAnswerMessage() {
-        return localeMessageSource.getMessage(FITNESS_SCHEDULES_CHANGES_EMPTY_MESSAGE_SOURCE);
+        return localeMessageSource.getMessage(FITNESS_SCHEDULES_GP_EMPTY_MESSAGE_SOURCE);
     }
 
     @Override
@@ -113,6 +114,6 @@ public class ScheduleChangesButtonHandler implements BotCallbackHandler, ScrollH
 
     @Override
     public boolean isApplicable(String callback) {
-        return callback.contains(CallbackValue.SCHEDULE_CHANGES.getValue());
+        return callback.contains(CallbackValue.CURRENT_SCHEDULE.getValue());
     }
 }

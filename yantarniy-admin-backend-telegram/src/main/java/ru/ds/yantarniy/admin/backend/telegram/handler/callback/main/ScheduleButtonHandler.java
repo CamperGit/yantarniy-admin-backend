@@ -25,7 +25,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ScheduleButtonHandler implements BotCallbackHandler {
 
-    static String SCHEDULE_CHANGES_INIT_CALLBACK_FORMAT = "%s.(%s)";
+    static String SCHEDULE_INIT_CALLBACK_FORMAT = "%s.(%s)";
 
     static String SCHEDULE_CURRENT_LABEL_MESSAGE_SOURCE = "schedule.current.label";
 
@@ -61,8 +61,8 @@ public class ScheduleButtonHandler implements BotCallbackHandler {
         InlineKeyboardButton changesInSchedulesButton = new InlineKeyboardButton(localeMessageSource.getMessage(SCHEDULE_CHANGES_LABEL_MESSAGE_SOURCE));
         InlineKeyboardButton returnButton = new InlineKeyboardButton(localeMessageSource.getMessage(MOVE_BACK_MESSAGE_SOURCE));
 
-        groupsSchedulesButton.setCallbackData(CallbackValue.CURRENT_SCHEDULE.getValue());
-        changesInSchedulesButton.setCallbackData(String.format(SCHEDULE_CHANGES_INIT_CALLBACK_FORMAT, CallbackValue.SCHEDULE_CHANGES.getValue(), ScrollState.INIT.getValue()));
+        groupsSchedulesButton.setCallbackData(String.format(SCHEDULE_INIT_CALLBACK_FORMAT, CallbackValue.CURRENT_SCHEDULE.getValue(), ScrollState.INIT.getValue()));
+        changesInSchedulesButton.setCallbackData(String.format(SCHEDULE_INIT_CALLBACK_FORMAT, CallbackValue.SCHEDULE_CHANGES.getValue(), ScrollState.INIT.getValue()));
         returnButton.setCallbackData(CallbackValue.RETURN_MAIN_MENU.getValue());
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
