@@ -39,6 +39,10 @@ public enum CallbackValue {
     OPEN_DAY_GOLD_CARD_INFO("handleDayGoldClubCardButton"),
     OPEN_WEEKEND_CARD_INFO("handleWeekendClubCardButton"),
     OPEN_POOL_CARD_INFO("handlePoolClubCardButton"),
+    OPEN_CLUB_CARDS_SALES("handleClubCardsSalesButton"),
+    OPEN_CLUB_CARDS_CONTACT_US("handleCCSalesContactUsButton"),
+    OPEN_SPA_SALES("handleSpaSalesButton"),
+    OPEN_SPA_SALES_CONTACT_US("handleSpaSalesContactUsButton"),
     EMPLOYEES("handleEmployeeMenuButton"),
     RETURN_MAIN_MENU("handleReturnMainMenuButton");
 
