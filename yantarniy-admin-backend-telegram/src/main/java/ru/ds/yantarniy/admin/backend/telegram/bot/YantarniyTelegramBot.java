@@ -201,7 +201,7 @@ public class YantarniyTelegramBot extends TelegramLongPollingBot {
         salesButton.setCallbackData(CallbackValue.OPEN_SALES.getValue());
         scheduleButton.setCallbackData(CallbackValue.OPEN_SCHEDULE.getValue());
         clubCardsButton.setCallbackData(CallbackValue.OPEN_CLUB_CARDS.getValue());
-        spaServicesButton.setCallbackData(CallbackValue.OPEN_CLUB_CARDS.getValue());
+        spaServicesButton.setCallbackData(CallbackValue.PRICE_SPA.getValue());
         employeesButton.setCallbackData(CallbackValue.EMPLOYEES.getValue());
         sberQrButton.setCallbackData(CallbackValue.SBER_QR.getValue());
         contactAdminButton.setCallbackData(CallbackValue.CALL_ADMIN.getValue());

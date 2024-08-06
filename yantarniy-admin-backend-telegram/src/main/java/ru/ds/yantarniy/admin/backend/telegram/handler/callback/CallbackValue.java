@@ -29,6 +29,12 @@ public enum CallbackValue {
     OPEN_STYLISTS_SPA_SPECIALISTS("handleSpaStylistsButton"),
     OPEN_SPA_CONTACT_US("handleSpaContactUsButton"),
     PRICE_SPA("handleSpaServiceMenuButton"),
+    OPEN_SPA_PRICE_NAILS("handleSSNailsButton"),
+    OPEN_SPA_PRICE_COSMETOLOGY("handleSSCosmetologyButton"),
+    OPEN_SPA_PRICE_STYLISTS("handleSSStylistsButton"),
+    OPEN_SPA_PRICE_MASSAGE("handleSSMassageButton"),
+    OPEN_SPA_PRICE_BATHHOUSE("handleSSBathhouseButton"),
+    OPEN_PRICE_SPA_CONTACT_US("handlePriceSpaContactUs"),
     EMPLOYEES("handleEmployeeMenuButton"),
     RETURN_MAIN_MENU("handleReturnMainMenuButton");
 
