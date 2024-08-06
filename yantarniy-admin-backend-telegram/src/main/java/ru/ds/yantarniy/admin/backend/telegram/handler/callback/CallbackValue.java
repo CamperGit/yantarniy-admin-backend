@@ -23,6 +23,11 @@ public enum CallbackValue {
     OPEN_FITNESS_GROUP_COACHES("handleFitnessGroupsButton"),
     OPEN_POOL_COACHES("handleFitnessPoolButton"),
     OPEN_EMPLOYEES_CONTACT_US("handleFitnessContactUsButton"),
+    OPEN_NAILS_SPA_SPECIALISTS("handleSpaNailsButton"),
+    OPEN_MASSAGE_SPA_SPECIALISTS("handleSpaMassageButton"),
+    OPEN_COSMETOLOGY_SPA_SPECIALISTS("handleSpaCosmetologyButton"),
+    OPEN_STYLISTS_SPA_SPECIALISTS("handleSpaStylistsButton"),
+    OPEN_SPA_CONTACT_US("handleSpaContactUsButton"),
     PRICE_SPA("handleSpaServiceMenuButton"),
     EMPLOYEES("handleEmployeeMenuButton"),
     RETURN_MAIN_MENU("handleReturnMainMenuButton");

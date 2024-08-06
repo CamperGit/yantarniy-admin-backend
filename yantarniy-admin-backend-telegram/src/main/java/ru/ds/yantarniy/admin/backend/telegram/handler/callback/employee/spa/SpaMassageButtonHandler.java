@@ -1,4 +1,4 @@
-package ru.ds.yantarniy.admin.backend.telegram.handler.callback.employee.coach;
+package ru.ds.yantarniy.admin.backend.telegram.handler.callback.employee.spa;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +34,10 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class CoachGymButtonHandler implements BotCallbackHandler, ScrollHelperService<EmployeeEntity> {
+public class SpaMassageButtonHandler implements BotCallbackHandler, ScrollHelperService<EmployeeEntity> {
 
-    static String COACHES_CATEGORY_MESSAGE_SOURCE = "fitness.coaches.category";
-    static String COACH_LOCATION_EMPTY_MESSAGE_SOURCE = "employee.coaches.location.empty";
-    static String COACH_CONTACT_US_MESSAGE_SOURCE = "fitness.coaches.contact-us";
+    static String SPA_LOCATION_EMPTY_MESSAGE_SOURCE = "spa.specialists.location.empty";
+    static String SPA_CONTACT_US_MESSAGE_SOURCE = "spa.specialists.contact-us";
 
     LocaleMessageSource localeMessageSource;
 
@@ -62,22 +61,16 @@ public class CoachGymButtonHandler implements BotCallbackHandler, ScrollHelperSe
                 scrollResponse.getNumberOfItems(),
                 value.getId(),
                 scrollResponse.getCurrentPosition(),
-                CallbackValue.OPEN_GYM_COACHES.getValue(),
-                CallbackValue.OPEN_COACHES.getValue(),
-                localeMessageSource.getMessage(COACH_CONTACT_US_MESSAGE_SOURCE),
-                CallbackValue.OPEN_EMPLOYEES_CONTACT_US.getValue()
+                CallbackValue.OPEN_MASSAGE_SPA_SPECIALISTS.getValue(),
+                CallbackValue.OPEN_SPECIALISTS.getValue(),
+                localeMessageSource.getMessage(SPA_CONTACT_US_MESSAGE_SOURCE),
+                CallbackValue.OPEN_SPA_CONTACT_US.getValue()
         );
     }
 
     @Override
     public String getNotEmptyScrollResponseDescription(ScrollResponse<EmployeeEntity> scrollResponse) {
-        EmployeeEntity value = scrollResponse.getValue();
-        String type = value.getType().getTitle();
-        String caption = null;
-        if (type != null) {
-            caption = String.format("%s %s", localeMessageSource.getMessage(COACHES_CATEGORY_MESSAGE_SOURCE), type);
-        }
-        return caption;
+        return scrollResponse.getValue().getDescription();
     }
 
     @Override
@@ -105,22 +98,22 @@ public class CoachGymButtonHandler implements BotCallbackHandler, ScrollHelperSe
     @Override
     public List<Specification<EmployeeEntity>> getAdditionalSpecifications() {
         return Collections.singletonList(
-                Specifications.inOrReturnNull("location.type", Collections.singletonList(LocationType.GYM.getCode()))
+                Specifications.inOrReturnNull("location.type", Collections.singletonList(LocationType.MASSAGE.getCode()))
         );
     }
 
     @Override
     public String getEmptyScrollResponseAnswerMessage() {
-        return localeMessageSource.getMessage(COACH_LOCATION_EMPTY_MESSAGE_SOURCE);
+        return localeMessageSource.getMessage(SPA_LOCATION_EMPTY_MESSAGE_SOURCE);
     }
 
     @Override
     public InlineKeyboardMarkup getEmptyScrollResponseReplyKeyboard() {
-        return markupService.getReturnMarkup(CallbackValue.OPEN_COACHES.getValue(), true);
+        return markupService.getReturnMarkup(CallbackValue.OPEN_SPECIALISTS.getValue(), true);
     }
 
     @Override
     public boolean isApplicable(String callback) {
-        return callback.contains(CallbackValue.OPEN_GYM_COACHES.getValue());
+        return callback.contains(CallbackValue.OPEN_MASSAGE_SPA_SPECIALISTS.getValue());
     }
 }

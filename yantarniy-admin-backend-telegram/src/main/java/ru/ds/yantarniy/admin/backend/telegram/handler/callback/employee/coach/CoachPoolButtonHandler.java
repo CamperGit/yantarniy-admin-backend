@@ -36,7 +36,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CoachPoolButtonHandler implements BotCallbackHandler, ScrollHelperService<EmployeeEntity> {
 
-    protected static final String COACHES_CATEGORY_MESSAGE_SOURCE = "fitness.coaches.category";
+    static String COACHES_CATEGORY_MESSAGE_SOURCE = "fitness.coaches.category";
     static String COACH_LOCATION_EMPTY_MESSAGE_SOURCE = "employee.coaches.location.empty";
     static String COACH_CONTACT_US_MESSAGE_SOURCE = "fitness.coaches.contact-us";
 
