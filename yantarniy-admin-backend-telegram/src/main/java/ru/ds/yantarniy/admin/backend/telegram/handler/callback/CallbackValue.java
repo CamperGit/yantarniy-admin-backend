@@ -16,7 +16,13 @@ public enum CallbackValue {
     OPEN_SCHEDULE("handleSchedulesMenuButton"),
     CURRENT_SCHEDULE("handleFitnessCurrentScheduleButton"),
     SCHEDULE_CHANGES("handleFitnessChangesButton"),
+    OPEN_SPECIALISTS("handleSpecialistsButton"),
+    OPEN_COACHES("handleCoachesButton"),
     OPEN_CLUB_CARDS("handleClubCardButton"),
+    OPEN_GYM_COACHES("handleFitnessGymButton"),
+    OPEN_FITNESS_GROUP_COACHES("handleFitnessGroupsButton"),
+    OPEN_POOL_COACHES("handleFitnessPoolButton"),
+    OPEN_EMPLOYEES_CONTACT_US("handleFitnessContactUsButton"),
     PRICE_SPA("handleSpaServiceMenuButton"),
     EMPLOYEES("handleEmployeeMenuButton"),
     RETURN_MAIN_MENU("handleReturnMainMenuButton");

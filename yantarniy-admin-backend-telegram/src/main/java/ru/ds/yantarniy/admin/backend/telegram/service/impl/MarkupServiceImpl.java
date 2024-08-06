@@ -39,7 +39,8 @@ public class MarkupServiceImpl implements MarkupService {
     LocaleMessageSource localeMessageSource;
 
     @Override
-    public InlineKeyboardMarkup getScrollMenuMarkup(long numberOfItems, long currentItemId, long currentItem, String callbackBaseData, String exitButtonCallbackData, String textOfContactUsButton, String contactUsCallbackData) {
+    public InlineKeyboardMarkup getScrollMenuMarkup(long numberOfItems, long currentItemId, long currentItem, String callbackBaseData,
+                                                    String exitButtonCallbackData, String textOfContactUsButton, String contactUsCallbackData) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton prevButton = new InlineKeyboardButton(localeMessageSource.getMessage(MARKUP_SCROLL_PREV_MESSAGE_SOURCE));
