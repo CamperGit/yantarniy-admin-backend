@@ -32,6 +32,12 @@ public class PageDto<T> {
     @ApiModelProperty("Номер текущей страницы")
     int pageNumber;
 
+    @ApiModelProperty("Признак того, что страница является первой")
+    boolean first;
+
+    @ApiModelProperty("Признак того, что страница является последней")
+    boolean last;
+
     public static <T> PageDto<T> from(Page<T> page) {
         return PageDto.<T>builder()
                 .pageSize(page.getSize())

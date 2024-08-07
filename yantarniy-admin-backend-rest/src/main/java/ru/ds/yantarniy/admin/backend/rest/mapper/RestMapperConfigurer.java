@@ -3,6 +3,7 @@ package ru.ds.yantarniy.admin.backend.rest.mapper;
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.stereotype.Component;
 import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapperConfigurer;
+import ru.ds.yantarniy.admin.backend.core.employee.model.SearchEmployeesModel;
 import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeTypeEntity;
@@ -16,6 +17,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.user.UserEntity;
 import ru.ds.yantarniy.admin.backend.rest.customer.CustomerDto;
 import ru.ds.yantarniy.admin.backend.rest.employee.EmployeeDto;
 import ru.ds.yantarniy.admin.backend.rest.employee.EmployeeTypeDto;
+import ru.ds.yantarniy.admin.backend.rest.employee.SearchEmployeesRequestParam;
 import ru.ds.yantarniy.admin.backend.rest.file.FileDto;
 import ru.ds.yantarniy.admin.backend.rest.location.LocationDto;
 import ru.ds.yantarniy.admin.backend.rest.price.PriceDto;
@@ -65,6 +67,10 @@ public class RestMapperConfigurer implements OrikaMapperConfigurer {
                 .register();
 
         factory.classMap(UserDto.class, UserEntity.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(SearchEmployeesRequestParam.class, SearchEmployeesModel.class)
                 .byDefault()
                 .register();
     }

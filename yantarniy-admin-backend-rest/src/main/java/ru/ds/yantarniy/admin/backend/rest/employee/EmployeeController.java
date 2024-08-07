@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,12 @@ import ru.ds.yantarniy.admin.backend.common.orika.DefaultMapper;
 import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapper;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.employee.model.SearchEmployeesModel;
 import ru.ds.yantarniy.admin.backend.core.employee.service.EmployeeService;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.rest.common.MultipartFileUtils;
+import ru.ds.yantarniy.admin.backend.rest.common.PageDto;
 
 @Validated
 @RestController
@@ -73,6 +76,21 @@ public class EmployeeController {
     ) {
         EmployeeEntity employee = employeeService.findById(id);
         return ResponseEntity.ok(mapper.map(employee, EmployeeDto.class));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageDto<EmployeeDto>> search(@ModelAttribute SearchEmployeesRequestParam requestParam) {
+        Page<EmployeeEntity> page = employeeService.search(mapper.map(requestParam, SearchEmployeesModel.class));
+        return ResponseEntity.ok(
+                PageDto.<EmployeeDto>builder()
+                        .pageNumber(page.getNumber())
+                        .pageSize(page.getSize())
+                        .totalElements(page.getTotalElements())
+                        .first(page.isFirst())
+                        .last(page.isLast())
+                        .content(mapper.mapAsList(page.getContent(), EmployeeDto.class))
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")

@@ -37,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and()
                     .authorizeRequests()
-                        .antMatchers(HttpMethod.GET, "/v1/users/**")
-                            .hasRole("USER")
+                        .antMatchers("/v1/**")
+                            .hasAnyRole("MODERATOR", "ADMIN")
                 .and()
                     .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer
                             .jwt(jwtConfigurer -> jwtConfigurer

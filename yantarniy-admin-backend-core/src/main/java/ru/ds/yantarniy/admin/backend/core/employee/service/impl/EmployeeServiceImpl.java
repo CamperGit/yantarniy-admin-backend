@@ -6,19 +6,28 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.employee.model.EmployeeUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.employee.model.SearchEmployeesModel;
 import ru.ds.yantarniy.admin.backend.core.employee.service.EmployeeService;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeRepository;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
+import ru.ds.yantarniy.admin.backend.dao.specification.Specifications;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+
+import static ru.ds.yantarniy.admin.backend.dao.specification.Specifications.equalOrReturnNull;
+import static ru.ds.yantarniy.admin.backend.dao.specification.Specifications.likeOrReturnNull;
 
 @Slf4j
 @Service
@@ -26,6 +35,7 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class EmployeeServiceImpl implements EmployeeService {
 
+    static String ID_PROPERTY_NAME = "id";
     EmployeeRepository employeeRepository;
 
     FileService fileService;
@@ -60,6 +70,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeEntity findById(Long id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Not found EmployeeEntity with id = %d", id)));
+    }
+
+    @Override
+    public Page<EmployeeEntity> search(SearchEmployeesModel searchModel) {
+        int pageNumber = searchModel.getPageNumber();
+        int pageSize = searchModel.getPageSize();
+        Sort.Direction sortDirection = searchModel.getSortDirection();
+        String sortProperty = searchModel.getSortProperty();
+        List<Specification<EmployeeEntity>> specifications = Arrays.asList(
+                equalOrReturnNull("type.id", searchModel.getTypeId()),
+                equalOrReturnNull("location.id", searchModel.getLocationId()),
+                likeOrReturnNull("description", searchModel.getDescriptionLike())
+        );
+        return employeeRepository.findAll(
+                Specifications.And.<EmployeeEntity>builder()
+                        .specifications(specifications)
+                        .build(),
+                sortDirection == null || StringUtils.isEmpty(sortProperty)
+                        ? PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, ID_PROPERTY_NAME)
+                        : PageRequest.of(pageNumber, pageSize, sortDirection, sortProperty));
     }
 
     @Override
