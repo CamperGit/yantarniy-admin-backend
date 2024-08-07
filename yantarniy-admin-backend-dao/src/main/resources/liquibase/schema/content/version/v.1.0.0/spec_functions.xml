@@ -7,4 +7,5 @@
     <include file="../../data/spec_functions/price_fk.xml" relativeToChangelogFile="true"/>
     <include file="../../data/spec_functions/sale_fk.xml" relativeToChangelogFile="true"/>
     <include file="../../data/spec_functions/schedule_fk.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/spec_functions/users_roles_fk.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

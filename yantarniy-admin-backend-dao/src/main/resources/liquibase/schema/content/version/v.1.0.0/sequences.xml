@@ -12,4 +12,5 @@
     <include file="../../data/sequences/sale_id_seq.xml" relativeToChangelogFile="true"/>
     <include file="../../data/sequences/schedule_id_seq.xml" relativeToChangelogFile="true"/>
     <include file="../../data/sequences/schedule_type_id_seq.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/sequences/user_role_id_seq.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

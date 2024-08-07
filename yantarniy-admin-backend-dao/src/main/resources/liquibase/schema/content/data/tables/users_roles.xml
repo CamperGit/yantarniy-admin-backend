@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_tables_users_roles_create_2024-08-07_19:22" author="dsashchenko">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users_roles"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="users_roles" remarks="users_roles">
+            <column name="user_id" type="VARCHAR" remarks="user_id">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role_id" type="BIGINT" remarks="role_id">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                columnNames="user_id, role_id"
+                constraintName="pk_users_roles"
+                schemaName="public"
+                tableName="users_roles"/>
+
+        <rollback>
+            <dropTable tableName="users_roles"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
