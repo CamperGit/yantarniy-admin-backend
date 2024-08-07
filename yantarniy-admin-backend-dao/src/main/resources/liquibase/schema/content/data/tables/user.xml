@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_tables_usr_create_2024-08-07_15:00" author="Camper">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="usr"/>
+            </not>
+        </preConditions>
+        <createTable tableName="usr" remarks="usr">
+            <column name="id" type="VARCHAR" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR" remarks="last_name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR" remarks="first_name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR" remarks="username">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_picture" type="VARCHAR(1000)" remarks="user_picture">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="VARCHAR" remarks="email">
+                <constraints nullable="true"/>
+            </column>
+            <column name="gender" type="VARCHAR" remarks="gender">
+                <constraints nullable="true"/>
+            </column>
+            <column name="locale" type="VARCHAR" remarks="locale">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_visit" type="TIMESTAMP WITHOUT TIME ZONE" remarks="last_visit">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="usr"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -6,4 +6,5 @@
     <include file="../../data/data/employee_type_data.xml" relativeToChangelogFile="true"/>
     <include file="../../data/data/location_data.xml" relativeToChangelogFile="true"/>
     <include file="../../data/data/schedule_type_data.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/data/user_role_data.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

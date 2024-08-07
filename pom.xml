@@ -20,6 +20,7 @@
         <module>yantarniy-admin-backend-minio</module>
         <module>yantarniy-admin-backend-telegram</module>
         <module>yantarniy-admin-backend-common</module>
+        <module>yantarniy-admin-backend-security</module>
     </modules>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -44,9 +45,10 @@
         <swagger.version>3.0.0</swagger.version>
 
         <liquibase.version>3.8.0</liquibase.version>
-        <minio.version>8.5.3</minio.version>
+        <minio.version>8.2.1</minio.version>
         <orika.version>1.5.4</orika.version>
         <apache.commons.version>3.12.0</apache.commons.version>
+        <apache.collections.version>4.0</apache.collections.version>
         <google.guava.version>28.0-jre</google.guava.version>
         <lombok.version>1.18.10</lombok.version>
         <telegrambots.version>6.7.0</telegrambots.version>
@@ -118,6 +120,12 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${apache.collections.version}</version>
             </dependency>
 
             <dependency>

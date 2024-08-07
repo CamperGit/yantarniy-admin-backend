@@ -13,7 +13,6 @@ import ru.ds.yantarniy.admin.backend.minio.property.MinioProperties;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties
-@ComponentScan(basePackages = {"ru.ds.yantarniy.admin.backend.minio"})
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MinioConfiguration {
 

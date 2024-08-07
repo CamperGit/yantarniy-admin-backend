@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_users_roles_fk_2024-07-07_19:24" author="xezard" context="all">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="users_roles"
+                        foreignKeyName="users_roles_user_fk"/>
+
+                <foreignKeyConstraintExists
+                        foreignKeyTableName="users_roles"
+                        foreignKeyName="users_roles_role_fk"/>
+            </not>
+        </preConditions>
+
+        <addForeignKeyConstraint baseTableName="users_roles"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="usr"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="users_roles_user_fk"
+                                 onUpdate="CASCADE"
+                                 onDelete="CASCADE"
+                                 validate="true"
+                                 constraintName="users_roles_user_fk"/>
+
+        <addForeignKeyConstraint baseTableName="users_roles"
+                                 baseColumnNames="role_id"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id"
+                                 foreignKeyName="users_roles_role_fk"
+                                 onUpdate="NO ACTION"
+                                 onDelete="NO ACTION"
+                                 validate="true"
+                                 constraintName="users_roles_role_fk"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="users_roles"
+                                      constraintName="users_roles_user_fk"/>
+
+            <dropForeignKeyConstraint baseTableName="users_roles"
+                                      constraintName="users_roles_role_fk"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

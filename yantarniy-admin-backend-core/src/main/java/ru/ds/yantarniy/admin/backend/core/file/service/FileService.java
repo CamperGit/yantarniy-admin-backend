@@ -1,11 +1,12 @@
 package ru.ds.yantarniy.admin.backend.core.file.service;
 
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
+import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 
 import java.io.InputStream;
 
-public interface FileService {
+public interface FileService extends SpecificationsSearchService<FileEntity> {
 
     FileEntity upload(FileUploadRequest uploadRequest);
 

@@ -12,6 +12,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleTypeEntity;
+import ru.ds.yantarniy.admin.backend.dao.entity.user.UserEntity;
 import ru.ds.yantarniy.admin.backend.rest.customer.CustomerDto;
 import ru.ds.yantarniy.admin.backend.rest.employee.EmployeeDto;
 import ru.ds.yantarniy.admin.backend.rest.employee.EmployeeTypeDto;
@@ -21,6 +22,7 @@ import ru.ds.yantarniy.admin.backend.rest.price.PriceDto;
 import ru.ds.yantarniy.admin.backend.rest.sale.SaleDto;
 import ru.ds.yantarniy.admin.backend.rest.schedule.ScheduleDto;
 import ru.ds.yantarniy.admin.backend.rest.schedule.ScheduleTypeDto;
+import ru.ds.yantarniy.admin.backend.rest.user.UserDto;
 
 @Component
 public class RestMapperConfigurer implements OrikaMapperConfigurer {
@@ -59,6 +61,10 @@ public class RestMapperConfigurer implements OrikaMapperConfigurer {
                 .register();
 
         factory.classMap(ScheduleTypeDto.class, ScheduleTypeEntity.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(UserDto.class, UserEntity.class)
                 .byDefault()
                 .register();
     }

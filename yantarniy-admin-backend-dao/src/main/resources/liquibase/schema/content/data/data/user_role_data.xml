@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="content_data_employee_type_insert_2024-08-07_19:29" author="Camper" context="all">
+        <insert tableName="user_role">
+            <column name="title" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="title" value="ROLE_ADMIN"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="user_role">
+                <where>title IN ('ROLE_USER', 'ROLE_ADMIN')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

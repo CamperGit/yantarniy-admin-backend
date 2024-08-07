@@ -10,6 +10,7 @@ import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity findByChatId(String chatId) {
-        return customerRepository.findByChatId(chatId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Not found CustomerEntity with chat id = %s", chatId)));
+    public Optional<CustomerEntity> findByChatId(String chatId) {
+        return customerRepository.findByChatId(chatId);
     }
 
     @Override

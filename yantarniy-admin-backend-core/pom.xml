@@ -18,6 +18,7 @@
         <yantarniy-admin-backend-common.version>1.0.0</yantarniy-admin-backend-common.version>
         <yantarniy-admin-backend-dao.version>1.0.0</yantarniy-admin-backend-dao.version>
         <yantarniy-admin-backend-minio.version>1.0.0</yantarniy-admin-backend-minio.version>
+        <yantarniy-admin-backend-security.version>1.0.0</yantarniy-admin-backend-security.version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,12 @@
             <groupId>ru.ds</groupId>
             <artifactId>yantarniy-admin-backend-minio</artifactId>
             <version>${yantarniy-admin-backend-minio.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ds</groupId>
+            <artifactId>yantarniy-admin-backend-security</artifactId>
+            <version>${yantarniy-admin-backend-security.version}</version>
         </dependency>
 
         <dependency>
@@ -72,6 +79,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
         </dependency>
     </dependencies>
 

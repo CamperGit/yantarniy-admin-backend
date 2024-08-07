@@ -12,4 +12,7 @@
     <include file="../../data/tables/sale.xml" relativeToChangelogFile="true"/>
     <include file="../../data/tables/schedule.xml" relativeToChangelogFile="true"/>
     <include file="../../data/tables/schedule_type.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/tables/user.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/tables/user_role.xml" relativeToChangelogFile="true"/>
+    <include file="../../data/tables/users_roles.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
