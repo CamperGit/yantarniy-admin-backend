@@ -8,14 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleUpdateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.service.SaleService;
 import ru.ds.yantarniy.admin.backend.core.search.SpecificationsSearchService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
-import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
-import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceRepository;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleRepository;
 
@@ -45,12 +44,17 @@ public class SaleServiceImpl implements SaleService, SpecificationsSearchService
     @Override
     public SaleEntity update(SaleUpdateRequest request) {
         SaleEntity entity = request.getEntity();
-        Optional.ofNullable(request.getFileUploadRequest()).ifPresent(fileUploadRequest -> {
-            FileEntity newFile = fileService.upload(fileUploadRequest);
-            Optional.ofNullable(entity.getFile()).ifPresent(currentEntityFile -> fileService.deleteById(currentEntityFile.getId()));
+        Optional<FileUploadRequest> fileUploadRequest = Optional.ofNullable(request.getFileUploadRequest());
+        if (fileUploadRequest.isPresent()) {
+            FileEntity newFile = fileService.upload(fileUploadRequest.get());
+            FileEntity oldFile = entity.getFile();
             entity.setFile(newFile);
-        });
-        return save(entity);
+            entity = save(entity);
+            Optional.ofNullable(oldFile).ifPresent(currentEntityFile -> fileService.deleteById(currentEntityFile.getId()));
+            return entity;
+        } else {
+            return save(entity);
+        }
     }
 
     @Override
@@ -68,10 +72,10 @@ public class SaleServiceImpl implements SaleService, SpecificationsSearchService
     public void deleteById(Long id) {
         SaleEntity sale = findById(id);
         FileEntity file = sale.getFile();
+        saleRepository.deleteById(id);
         if (file != null) {
             fileService.deleteById(file.getId());
         }
-        saleRepository.deleteById(id);
     }
 
     @Override
