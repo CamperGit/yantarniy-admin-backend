@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,11 @@ import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapper;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.price.model.PriceCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.price.model.PriceUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.price.model.SearchPricesModel;
 import ru.ds.yantarniy.admin.backend.core.price.service.PriceService;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
 import ru.ds.yantarniy.admin.backend.rest.common.MultipartFileUtils;
+import ru.ds.yantarniy.admin.backend.rest.common.PageDto;
 
 @Validated
 @RestController
@@ -73,6 +76,21 @@ public class PriceController {
     ) {
         PriceEntity price = priceService.findById(id);
         return ResponseEntity.ok(mapper.map(price, PriceDto.class));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageDto<PriceDto>> search(@ModelAttribute SearchPricesRequestParam requestParam) {
+        Page<PriceEntity> page = priceService.search(mapper.map(requestParam, SearchPricesModel.class));
+        return ResponseEntity.ok(
+                PageDto.<PriceDto>builder()
+                        .pageNumber(page.getNumber())
+                        .pageSize(page.getSize())
+                        .totalElements(page.getTotalElements())
+                        .first(page.isFirst())
+                        .last(page.isLast())
+                        .content(mapper.mapAsList(page.getContent(), PriceDto.class))
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")

@@ -6,25 +6,35 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.price.model.PriceCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.price.model.PriceUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.price.model.SearchPricesModel;
 import ru.ds.yantarniy.admin.backend.core.price.service.PriceService;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.price.PriceRepository;
+import ru.ds.yantarniy.admin.backend.dao.specification.Specifications;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+
+import static ru.ds.yantarniy.admin.backend.dao.specification.Specifications.equalOrReturnNull;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PriceServiceImpl implements PriceService {
+
+    static String ID_PROPERTY_NAME = "id";
 
     PriceRepository priceRepository;
 
@@ -65,6 +75,24 @@ public class PriceServiceImpl implements PriceService {
     public PriceEntity findById(Long id) {
         return priceRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Not found PriceEntity with id = %d", id)));
+    }
+
+    @Override
+    public Page<PriceEntity> search(SearchPricesModel searchModel) {
+        int pageNumber = searchModel.getPageNumber();
+        int pageSize = searchModel.getPageSize();
+        Sort.Direction sortDirection = searchModel.getSortDirection();
+        String sortProperty = searchModel.getSortProperty();
+        List<Specification<PriceEntity>> specifications = Arrays.asList(
+                equalOrReturnNull("location.id", searchModel.getLocationId())
+        );
+        return priceRepository.findAll(
+                Specifications.And.<PriceEntity>builder()
+                        .specifications(specifications)
+                        .build(),
+                sortDirection == null || StringUtils.isEmpty(sortProperty)
+                        ? PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, ID_PROPERTY_NAME)
+                        : PageRequest.of(pageNumber, pageSize, sortDirection, sortProperty));
     }
 
     @Override

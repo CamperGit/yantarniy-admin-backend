@@ -6,25 +6,37 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.file.service.FileService;
 import ru.ds.yantarniy.admin.backend.core.schedule.model.ScheduleCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.schedule.model.ScheduleUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.schedule.model.SearchSchedulesModel;
 import ru.ds.yantarniy.admin.backend.core.schedule.service.ScheduleService;
+import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.file.FileEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.schedule.ScheduleRepository;
+import ru.ds.yantarniy.admin.backend.dao.specification.Specifications;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+
+import static ru.ds.yantarniy.admin.backend.dao.specification.Specifications.equalOrReturnNull;
+import static ru.ds.yantarniy.admin.backend.dao.specification.Specifications.likeOrReturnNull;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ScheduleServiceImpl implements ScheduleService {
+
+    static String ID_PROPERTY_NAME = "id";
 
     ScheduleRepository scheduleRepository;
 
@@ -65,6 +77,25 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleEntity findById(Long id) {
         return scheduleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Not found ScheduleEntity with id = %d", id)));
+    }
+
+    @Override
+    public Page<ScheduleEntity> search(SearchSchedulesModel searchModel) {
+        int pageNumber = searchModel.getPageNumber();
+        int pageSize = searchModel.getPageSize();
+        Sort.Direction sortDirection = searchModel.getSortDirection();
+        String sortProperty = searchModel.getSortProperty();
+        List<Specification<ScheduleEntity>> specifications = Arrays.asList(
+                equalOrReturnNull("type.id", searchModel.getTypeId()),
+                likeOrReturnNull("description", searchModel.getDescriptionLike())
+        );
+        return scheduleRepository.findAll(
+                Specifications.And.<ScheduleEntity>builder()
+                        .specifications(specifications)
+                        .build(),
+                sortDirection == null || StringUtils.isEmpty(sortProperty)
+                        ? PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, ID_PROPERTY_NAME)
+                        : PageRequest.of(pageNumber, pageSize, sortDirection, sortProperty));
     }
 
     @Override

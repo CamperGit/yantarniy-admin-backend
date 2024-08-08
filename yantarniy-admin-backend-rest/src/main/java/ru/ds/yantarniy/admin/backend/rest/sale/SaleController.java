@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,11 @@ import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapper;
 import ru.ds.yantarniy.admin.backend.core.file.model.FileUploadRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleCreateRequest;
 import ru.ds.yantarniy.admin.backend.core.sale.model.SaleUpdateRequest;
+import ru.ds.yantarniy.admin.backend.core.sale.model.SearchSalesModel;
 import ru.ds.yantarniy.admin.backend.core.sale.service.SaleService;
 import ru.ds.yantarniy.admin.backend.dao.entity.sale.SaleEntity;
 import ru.ds.yantarniy.admin.backend.rest.common.MultipartFileUtils;
+import ru.ds.yantarniy.admin.backend.rest.common.PageDto;
 
 @Validated
 @RestController
@@ -73,6 +76,21 @@ public class SaleController {
     ) {
         SaleEntity sale = saleService.findById(id);
         return ResponseEntity.ok(mapper.map(sale, SaleDto.class));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageDto<SaleDto>> search(@ModelAttribute SearchSalesRequestParam requestParam) {
+        Page<SaleEntity> page = saleService.search(mapper.map(requestParam, SearchSalesModel.class));
+        return ResponseEntity.ok(
+                PageDto.<SaleDto>builder()
+                        .pageNumber(page.getNumber())
+                        .pageSize(page.getSize())
+                        .totalElements(page.getTotalElements())
+                        .first(page.isFirst())
+                        .last(page.isLast())
+                        .content(mapper.mapAsList(page.getContent(), SaleDto.class))
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")
