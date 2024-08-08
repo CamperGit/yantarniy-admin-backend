@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerRole;
 
 import java.time.LocalDateTime;
 
@@ -37,4 +38,7 @@ public class CustomerDto {
 
     @ApiModelProperty(value = "Дата последней выполненной команды", required = true)
     LocalDateTime lastEntry;
+
+    @ApiModelProperty(value = "Роль")
+    CustomerRole role;
 }

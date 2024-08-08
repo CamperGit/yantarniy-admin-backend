@@ -11,7 +11,13 @@ public interface CustomerService {
 
     Optional<CustomerEntity> findByChatId(String chatId);
 
+    List<CustomerEntity> findAllByChatIds(List<String> chatIds);
+
     CustomerEntity findById(Long id);
 
     List<CustomerEntity> findAll();
+
+    List<String> findAllChatId();
+
+    List<String> findAllAdminChatId();
 }

@@ -42,4 +42,8 @@ public class CustomerEntity {
 
     @Column(name = "last_entry")
     LocalDateTime lastEntry;
+
+    @Column(name = "role")
+    @Enumerated(value = EnumType.STRING)
+    CustomerRole role;
 }

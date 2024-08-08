@@ -30,6 +30,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<CustomerEntity> findAllByChatIds(List<String> chatIds) {
+        return customerRepository.findAllByChatIdIn(chatIds);
+    }
+
+    @Override
     public CustomerEntity findById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Not found CustomerEntity with id = %d", id)));
@@ -38,5 +43,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerEntity> findAll() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public List<String> findAllChatId() {
+        return customerRepository.findAllChatId();
+    }
+
+    @Override
+    public List<String> findAllAdminChatId() {
+        return customerRepository.findAllAdminChatId();
     }
 }

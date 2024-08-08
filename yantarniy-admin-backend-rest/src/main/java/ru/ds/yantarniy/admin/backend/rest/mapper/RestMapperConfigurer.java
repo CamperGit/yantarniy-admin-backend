@@ -4,6 +4,9 @@ import ma.glasnost.orika.MapperFactory;
 import org.springframework.stereotype.Component;
 import ru.ds.yantarniy.admin.backend.common.orika.OrikaMapperConfigurer;
 import ru.ds.yantarniy.admin.backend.core.employee.model.SearchEmployeesModel;
+import ru.ds.yantarniy.admin.backend.core.price.model.SearchPricesModel;
+import ru.ds.yantarniy.admin.backend.core.sale.model.SearchSalesModel;
+import ru.ds.yantarniy.admin.backend.core.schedule.model.SearchSchedulesModel;
 import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeEntity;
 import ru.ds.yantarniy.admin.backend.dao.entity.employee.EmployeeTypeEntity;
@@ -21,10 +24,15 @@ import ru.ds.yantarniy.admin.backend.rest.employee.SearchEmployeesRequestParam;
 import ru.ds.yantarniy.admin.backend.rest.file.FileDto;
 import ru.ds.yantarniy.admin.backend.rest.location.LocationDto;
 import ru.ds.yantarniy.admin.backend.rest.price.PriceDto;
+import ru.ds.yantarniy.admin.backend.rest.price.SearchPricesRequestParam;
 import ru.ds.yantarniy.admin.backend.rest.sale.SaleDto;
+import ru.ds.yantarniy.admin.backend.rest.sale.SearchSalesRequestParam;
 import ru.ds.yantarniy.admin.backend.rest.schedule.ScheduleDto;
 import ru.ds.yantarniy.admin.backend.rest.schedule.ScheduleTypeDto;
+import ru.ds.yantarniy.admin.backend.rest.schedule.SearchSchedulesRequestParam;
+import ru.ds.yantarniy.admin.backend.rest.telegram.TelegramSendResponse;
 import ru.ds.yantarniy.admin.backend.rest.user.UserDto;
+import ru.ds.yantarniy.admin.backend.telegram.model.SendingReport;
 
 @Component
 public class RestMapperConfigurer implements OrikaMapperConfigurer {
@@ -71,6 +79,22 @@ public class RestMapperConfigurer implements OrikaMapperConfigurer {
                 .register();
 
         factory.classMap(SearchEmployeesRequestParam.class, SearchEmployeesModel.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(SearchPricesRequestParam.class, SearchPricesModel.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(SearchSalesRequestParam.class, SearchSalesModel.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(SearchSchedulesRequestParam.class, SearchSchedulesModel.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(TelegramSendResponse.class, SendingReport.class)
                 .byDefault()
                 .register();
     }

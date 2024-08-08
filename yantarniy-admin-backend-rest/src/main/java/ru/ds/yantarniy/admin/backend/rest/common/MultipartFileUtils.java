@@ -23,4 +23,14 @@ public class MultipartFileUtils {
             }
         }).orElse(null);
     }
+
+    public static byte[] getBytes(MultipartFile multipartFile) {
+        return Optional.ofNullable(multipartFile).map(file -> {
+            try {
+                return file.getBytes();
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to convert multipart file to byte array", e);
+            }
+        }).orElse(null);
+    }
 }
