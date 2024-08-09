@@ -40,4 +40,7 @@ public class MinioProperties {
 
     @NotNull(message = "Part size property not found")
     Integer partSize;
+
+    @NotNull(message = "Storage url context path property not found")
+    String storageUrlContextPath;
 }

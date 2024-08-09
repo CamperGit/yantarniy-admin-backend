@@ -92,7 +92,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public String getStorageUrl(String objectName) {
         return String.format(STORAGE_URL_FORMAT,
-                minioProperties.getUrl(),
+                minioProperties.getStorageUrlContextPath(),
                 minioProperties.getBucketName(),
                 objectName
         );
