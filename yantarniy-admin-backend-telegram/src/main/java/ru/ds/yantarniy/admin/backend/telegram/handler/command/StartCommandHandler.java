@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.ds.yantarniy.admin.backend.core.customer.service.CustomerService;
 import ru.ds.yantarniy.admin.backend.core.locale.LocaleMessageSource;
 import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerEntity;
+import ru.ds.yantarniy.admin.backend.dao.entity.customer.CustomerRole;
 import ru.ds.yantarniy.admin.backend.telegram.bot.YantarniyTelegramBot;
 import ru.ds.yantarniy.admin.backend.telegram.exception.YantarniyBotTelegramException;
 
@@ -51,6 +52,7 @@ public class StartCommandHandler implements BotCommandHandler {
                     .lastname(lastName)
                     .username(username)
                     .lastEntry(LocalDateTime.now())
+                    .role(CustomerRole.USER)
                     .build();
             customerService.save(newCustomer);
             try {
